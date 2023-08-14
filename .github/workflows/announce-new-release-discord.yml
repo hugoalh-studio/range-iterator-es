@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Announce New Release - Discord"
+on:
+  release:
+    types:
+      - "published"
+jobs:
+  main:
+    name: "Main"
+    uses: "hugoalh/hugoalh/.github/workflows/announce-new-release-discord.yml@main"
+    with:
+      name: "Range Iterator (Deno)"
+      color: "#000000"
+      thumbnail: "https://i.imgur.com/r4wRkZ5.png"
+    secrets:
+      DISCORD_WEBHOOK: "${{secrets.DISCORD_HXHS_PROJECTNEWRELEASEANNOUNCER_WEBHOOK}}"
