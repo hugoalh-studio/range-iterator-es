@@ -1,3 +1,4 @@
+type RangeIndexType<T> = T extends bigint ? bigint : number;
 /**
  * @access private
  * @param {string} name
@@ -13,18 +14,29 @@ function checkCharacter(name: string, value: string): number {
 }
 /**
  * @access private
- * @template {bigint | number} T
- * @param {T} start
- * @param {T} end
- * @param {T} step
- * @param {boolean} endExclusive
+ */
+interface RangeLooperParameters<T extends bigint | number | string> {
+	end: RangeIndexType<T>;
+	endExclusive: boolean;
+	resultIsString: T extends string ? true : false;
+	start: RangeIndexType<T>;
+	step: RangeIndexType<T>;
+}
+/**
+ * @access private
+ * @template {bigint | number | string} T
+ * @param {RangeLooperParameters<T>} param
  * @returns {Generator<T, void, unknown>}
  */
-function* rangeLooper<T extends bigint | number>(start: T, end: T, step: T, endExclusive: boolean): Generator<T, void, unknown> {
-	//@ts-ignore Both types are compatible.
-	for (let current: T = start; current <= end; current += step) {
-		if (!(endExclusive && current === end)) {
-			yield current;
+function* rangeLooper<T extends bigint | number | string>(param: RangeLooperParameters<T>): Generator<T, void, unknown> {
+	//@ts-ignore All of the types are compatible.
+	for (let current: RangeLooperParameters<T>["start"] = param.start; current <= param.end; current += param.step) {
+		if (!(param.endExclusive && current === param.end)) {
+			if (param.resultIsString) {
+				yield String.fromCodePoint(current as number) as T;
+			} else {
+				yield current as T;
+			}
 		}
 	}
 }
@@ -42,28 +54,58 @@ export interface RangeIteratorOptions<T> {
 	 * @default 1n // Big integer.
 	 * @default 1 // Number/String.
 	 */
-	step?: T extends bigint ? bigint : number;
-	/** @alias endExclusive */exclusiveEnd?: RangeIteratorOptions<T>["endExclusive"];
+	step?: RangeIndexType<T>;
+	/** @alias endExclusive */exclusiveEnd?: this["endExclusive"];
 }
 /**
- * Range iterator.
- * @template {bigint | number | string} T
- * @param {T} start Start.
- * @param {T} end End.
- * @param {RangeIteratorOptions<T>["step"]} [step] Step.
- * @returns {Generator<T, void, unknown>}
+ * Range iterator with big integers.
+ * @param {bigint} start Start.
+ * @param {bigint} end End.
+ * @param {RangeIteratorOptions<bigint>["step"]} [step] Step.
+ * @returns {Generator<bigint, void, unknown>}
  */
-export function rangeIterator<T extends bigint | number | string>(start: T, end: T, step?: RangeIteratorOptions<T>["step"]): Generator<T, void, unknown>;
+export function rangeIterator(start: bigint, end: bigint, step?: RangeIteratorOptions<bigint>["step"]): Generator<bigint, void, unknown>;
 /**
- * Range iterator.
- * @template {bigint | number | string} T
- * @param {T} start Start.
- * @param {T} end End.
- * @param {RangeIteratorOptions<T>} [options] Options.
- * @returns {Generator<T, void, unknown>}
+ * Range iterator with numbers.
+ * @param {number} start Start.
+ * @param {number} end End.
+ * @param {RangeIteratorOptions<number>["step"]} [step] Step.
+ * @returns {Generator<number, void, unknown>}
  */
-export function rangeIterator<T extends bigint | number | string>(start: T, end: T, options?: RangeIteratorOptions<T>): Generator<T, void, unknown>;
-export function* rangeIterator<T extends bigint | number | string>(start: T, end: T, options: RangeIteratorOptions<T>["step"] | RangeIteratorOptions<T> = {}): Generator<T, void, unknown> {
+export function rangeIterator(start: number, end: number, step?: RangeIteratorOptions<number>["step"]): Generator<number, void, unknown>;
+/**
+ * Range iterator with characters.
+ * @param {string} start Start.
+ * @param {string} end End.
+ * @param {RangeIteratorOptions<number>["step"]} [step] Step.
+ * @returns {Generator<string, void, unknown>}
+ */
+export function rangeIterator(start: string, end: string, step?: RangeIteratorOptions<string>["step"]): Generator<string, void, unknown>;
+/**
+ * Range iterator with big integers.
+ * @param {bigint} start Start.
+ * @param {bigint} end End.
+ * @param {RangeIteratorOptions<bigint>} [options] Options.
+ * @returns {Generator<bigint, void, unknown>}
+ */
+export function rangeIterator(start: bigint, end: bigint, options?: RangeIteratorOptions<bigint>): Generator<bigint, void, unknown>;
+/**
+ * Range iterator with numbers.
+ * @param {number} start Start.
+ * @param {number} end End.
+ * @param {RangeIteratorOptions<number>} [options] Options.
+ * @returns {Generator<number, void, unknown>}
+ */
+export function rangeIterator(start: number, end: number, options?: RangeIteratorOptions<number>): Generator<number, void, unknown>;
+/**
+ * Range iterator with characters.
+ * @param {string} start Start.
+ * @param {string} end End.
+ * @param {RangeIteratorOptions<number>} [options] Options.
+ * @returns {Generator<string, void, unknown>}
+ */
+export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string, void, unknown>;
+export function rangeIterator<T extends bigint | number | string>(start: T, end: T, options: RangeIteratorOptions<T>["step"] | RangeIteratorOptions<T> = {}): Generator<T, void, unknown> {
 	if (
 		typeof options === "bigint" ||
 		typeof options === "number"
@@ -89,18 +131,22 @@ export function* rangeIterator<T extends bigint | number | string>(start: T, end
 		} else if (typeof options.step !== "undefined") {
 			throw new TypeError(`Argument \`options.step\` must be type of bigint or undefined!`);
 		}
-		for (let item of rangeLooper<bigint>(start, end, step, endExclusive)) {
-			yield item as T;
-		}
+		return rangeLooper<bigint>({
+			end,
+			step,
+			endExclusive,
+			resultIsString: false,
+			start
+		}) as Generator<T, void, unknown>;
 	} else {
 		let endAsNumber: number;
 		let startAsNumber: number;
-		let resultIsCharacter = false;
+		let resultIsString = false;
 		if (typeof start === "number" && !Number.isNaN(start) && typeof end === "number" && !Number.isNaN(end)) {
 			endAsNumber = end;
 			startAsNumber = start;
 		} else if (typeof start === "string" && typeof end === "string") {
-			resultIsCharacter = true;
+			resultIsString = true;
 			startAsNumber = checkCharacter("start", start);
 			endAsNumber = checkCharacter("end", end);
 		} else {
@@ -115,13 +161,22 @@ export function* rangeIterator<T extends bigint | number | string>(start: T, end
 		} else if (typeof options.step !== "undefined") {
 			throw new TypeError(`Argument \`options.step\` must be type of number or undefined!`);
 		}
-		for (let item of rangeLooper<number>(startAsNumber, endAsNumber, step, endExclusive)) {
-			if (resultIsCharacter) {
-				yield String.fromCodePoint(item) as T;
-			} else {
-				yield item as T;
-			}
+		if (resultIsString) {
+			return rangeLooper<string>({
+				end: endAsNumber,
+				endExclusive,
+				resultIsString: true,
+				start: startAsNumber,
+				step
+			}) as Generator<T, void, unknown>;
 		}
+		return rangeLooper<number>({
+			end: endAsNumber,
+			endExclusive,
+			resultIsString: false,
+			start: startAsNumber,
+			step
+		}) as Generator<T, void, unknown>;
 	}
 }
 export default rangeIterator;

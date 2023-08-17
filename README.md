@@ -37,8 +37,12 @@ import rangeIterator from "<URL>";// Default Import (Function `rangeIterator`)
 ### API
 
 - ```ts
-  function rangeIterator<T extends bigint | number | string>(start: T, end: T, step?: RangeIteratorOptions<T>["step"]): Generator<T, void, unknown>;
-  function rangeIterator<T extends bigint | number | string>(start: T, end: T, options?: RangeIteratorOptions<T>): Generator<T, void, unknown>;
+  function rangeIterator(start: bigint, end: bigint, step?: RangeIteratorOptions<bigint>["step"]): Generator<bigint, void, unknown>;
+  function rangeIterator(start: number, end: number, step?: RangeIteratorOptions<number>["step"]): Generator<number, void, unknown>;
+  function rangeIterator(start: string, end: string, step?: RangeIteratorOptions<string>["step"]): Generator<string, void, unknown>;
+  function rangeIterator(start: bigint, end: bigint, options?: RangeIteratorOptions<bigint>): Generator<bigint, void, unknown>;
+  function rangeIterator(start: number, end: number, options?: RangeIteratorOptions<number>): Generator<number, void, unknown>;
+  function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string, void, unknown>;
   ```
 - ```ts
   interface RangeIteratorOptions<T> {
