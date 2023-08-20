@@ -16,7 +16,7 @@ Deno.bench({
 	}
 });
 Deno.bench({
-	name: "5",
+	name: "3",
 	fn: () => {
 		for (let iterator of rangeIterator(String.fromCodePoint(0), String.fromCodePoint(0x10FFFF))) {
 			iterator;
