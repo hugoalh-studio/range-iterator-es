@@ -6,7 +6,7 @@ type RangeIndexType<T> = T extends bigint ? bigint : number;
  * @returns {number}
  */
 function checkCharacter(name: string, value: string): number {
-	let valueSplit: string[] = [...value];
+	const valueSplit: string[] = [...value];
 	if (valueSplit.length !== 1) {
 		throw new SyntaxError(`\`${valueSplit.join(" ")}\` (argument \`${name}\`) must be a string which is in code point range 0 ~ 1114111!`);
 	}

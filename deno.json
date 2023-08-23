@@ -12,6 +12,14 @@
 		"rules": {
 			"tags": [
 				"recommended"
+			],
+			"include": [
+				"eqeqeq",
+				"guard-for-in",
+				"no-const-assign",
+				"no-eval",
+				"no-sparse-arrays",
+				"no-sync-fn-in-async-fn"
 			]
 		}
 	},
