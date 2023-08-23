@@ -29,8 +29,9 @@ interface RangeLooperParameters<T extends bigint | number | string> {
  * @returns {Generator<T, void, unknown>}
  */
 function* rangeLooper<T extends bigint | number | string>(param: RangeLooperParameters<T>): Generator<T, void, unknown> {
+	const isReverse: boolean = param.start > param.end;
 	//@ts-ignore All of the types are compatible.
-	for (let current: RangeLooperParameters<T>["start"] = param.start; current <= param.end; current += param.step) {
+	for (let current: RangeLooperParameters<T>["start"] = param.start; isReverse ? current >= param.end : current <= param.end; current += isReverse ? -param.step : param.step) {
 		if (!(param.endExclusive && current === param.end)) {
 			if (param.resultIsString) {
 				yield String.fromCodePoint(current as number) as T;
@@ -122,12 +123,12 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 		throw new TypeError(`Argument \`options.endExclusive\` must be type of boolean or undefined!`);
 	}
 	if (typeof start === "bigint" && typeof end === "bigint") {
-		let step: bigint = (start > end) ? -1n : 1n;
+		let step = 1n;
 		if (typeof options.step === "bigint") {
 			if (!(options.step > 0n)) {
 				throw new RangeError(`Argument \`options.step\` must be a bigint which is > 0n!`);
 			}
-			step = (start > end) ? -options.step : options.step;
+			step = options.step;
 		} else if (typeof options.step !== "undefined") {
 			throw new TypeError(`Argument \`options.step\` must be type of bigint or undefined!`);
 		}
@@ -152,12 +153,12 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 		} else {
 			throw new TypeError(`Arguments \`start\` and \`end\` must be type of bigints, numbers, or strings (character)!`);
 		}
-		let step: number = (startAsNumber > endAsNumber) ? -1 : 1;
+		let step = 1;
 		if (typeof options.step === "number" && !Number.isNaN(options.step)) {
 			if (!(options.step > 0)) {
 				throw new RangeError(`Argument \`options.step\` must be a number which is > 0!`);
 			}
-			step = (startAsNumber > endAsNumber) ? -options.step : options.step;
+			step = options.step;
 		} else if (typeof options.step !== "undefined") {
 			throw new TypeError(`Argument \`options.step\` must be type of number or undefined!`);
 		}
