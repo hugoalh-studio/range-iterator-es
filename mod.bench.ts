@@ -14,3 +14,18 @@ Deno.bench("Character 0~1114111", () => {
 		iterator;
 	}
 });
+Deno.bench("Big Integer 100~1", () => {
+	for (const iterator of rangeIterator(100n, 1n)) {
+		iterator;
+	}
+});
+Deno.bench("Number 100~1", () => {
+	for (const iterator of rangeIterator(100, 1)) {
+		iterator;
+	}
+});
+Deno.bench("Character 1114111~0", () => {
+	for (const iterator of rangeIterator(String.fromCodePoint(0x10FFFF), String.fromCodePoint(0))) {
+		iterator;
+	}
+});

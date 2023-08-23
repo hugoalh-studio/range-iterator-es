@@ -78,3 +78,19 @@ import rangeIterator from "<URL>";// Default Import (Function `rangeIterator`)
   Array.from(rangeIterator("a", "z"));
   //=> ["a", "b", "c", ... +20 ..., "x", "y", "z"]
   ```
+- ```ts
+  Array.from(rangeIterator(9, 1));
+  //=> [9, 8, 7, 6, 5, 4, 3, 2, 1]
+  ```
+- ```ts
+  Array.from(rangeIterator(9n, 1n, { endExclusive: true }));
+  //=> [9n, 8n, 7n, 6n, 5n, 4n, 3n, 2n]
+  ```
+- ```ts
+  Array.from(rangeIterator(9, 1, { step: 0.5 }));
+  //=> [9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1]
+  ```
+- ```ts
+  Array.from(rangeIterator("z", "a"));
+  //=> ["z", "y", "x", ... +20 ..., "c", "b", "a"]
+  ```
