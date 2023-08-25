@@ -1,5 +1,5 @@
-import { assertEquals } from "https://deno.land/std@0.199.0/assert/assert_equals.ts";
-import { assertThrows } from "https://deno.land/std@0.199.0/assert/assert_throws.ts";
+import { assertEquals } from "https://deno.land/std@0.200.0/assert/assert_equals.ts";
+import { assertThrows } from "https://deno.land/std@0.200.0/assert/assert_throws.ts";
 import rangeIterator from "./mod.ts";
 Deno.test("Equal 1", () => {
 	assertEquals(Array.from(rangeIterator(1, 9)), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
