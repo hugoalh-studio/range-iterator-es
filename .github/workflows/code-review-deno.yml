@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "CI/CD - Deno"
+name: "Code Review (Deno)"
 on:
   push:
     branches:
@@ -19,4 +19,4 @@ on:
 jobs:
   main:
     name: "Main"
-    uses: "hugoalh/hugoalh/.github/workflows/cicd-deno.yml@main"
+    uses: "hugoalh/hugoalh/.github/workflows/code-review-deno.yml@main"
