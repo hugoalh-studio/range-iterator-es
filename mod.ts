@@ -120,7 +120,7 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 	if (typeof options.endExclusive === "boolean") {
 		endExclusive = options.endExclusive;
 	} else if (typeof options.endExclusive !== "undefined") {
-		throw new TypeError(`Argument \`options.endExclusive\` must be type of boolean or undefined!`);
+		throw new TypeError(`Argument \`options.endExclusive\` must be a boolean or undefined!`);
 	}
 	if (typeof start === "bigint" && typeof end === "bigint") {
 		let step = 1n;
@@ -130,7 +130,7 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 			}
 			step = options.step;
 		} else if (typeof options.step !== "undefined") {
-			throw new TypeError(`Argument \`options.step\` must be type of bigint or undefined!`);
+			throw new TypeError(`Argument \`options.step\` must be a bigint or undefined!`);
 		}
 		return rangeLooper<bigint>({
 			end,
@@ -151,7 +151,7 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 			startAsNumber = checkCharacter("start", start);
 			endAsNumber = checkCharacter("end", end);
 		} else {
-			throw new TypeError(`Arguments \`start\` and \`end\` must be type of bigints, numbers, or strings (character)!`);
+			throw new TypeError(`Arguments \`start\` and \`end\` must be bigints, numbers, or strings (character)!`);
 		}
 		let step = 1;
 		if (typeof options.step === "number" && !Number.isNaN(options.step)) {
@@ -160,7 +160,7 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 			}
 			step = options.step;
 		} else if (typeof options.step !== "undefined") {
-			throw new TypeError(`Argument \`options.step\` must be type of number or undefined!`);
+			throw new TypeError(`Argument \`options.step\` must be a number or undefined!`);
 		}
 		if (resultIsString) {
 			return rangeLooper<string>({
