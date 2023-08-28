@@ -8,7 +8,7 @@ type RangeIndexType<T> = T extends bigint ? bigint : number;
 function checkCharacter(name: string, value: string): number {
 	const valueSplit: string[] = [...value];
 	if (valueSplit.length !== 1) {
-		throw new SyntaxError(`\`${valueSplit.join(" ")}\` (argument \`${name}\`) must be a string which is in code point range 0 ~ 1114111!`);
+		throw new RangeError(`\`${valueSplit.join(" ")}\` (argument \`${name}\`) is not a character which is in code point range 0 ~ 1114111!`);
 	}
 	return value.codePointAt(0) as number;
 }
@@ -120,17 +120,17 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 	if (typeof options.endExclusive === "boolean") {
 		endExclusive = options.endExclusive;
 	} else if (typeof options.endExclusive !== "undefined") {
-		throw new TypeError(`Argument \`options.endExclusive\` must be a boolean or undefined!`);
+		throw new TypeError(`Argument \`options.endExclusive\` is not a boolean or undefined!`);
 	}
 	if (typeof start === "bigint" && typeof end === "bigint") {
 		let step = 1n;
 		if (typeof options.step === "bigint") {
 			if (!(options.step > 0n)) {
-				throw new RangeError(`Argument \`options.step\` must be a bigint which is > 0n!`);
+				throw new RangeError(`Argument \`options.step\` is not a bigint which is > 0n!`);
 			}
 			step = options.step;
 		} else if (typeof options.step !== "undefined") {
-			throw new TypeError(`Argument \`options.step\` must be a bigint or undefined!`);
+			throw new TypeError(`Argument \`options.step\` is not a bigint or undefined!`);
 		}
 		return rangeLooper<bigint>({
 			end,
@@ -151,16 +151,16 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 			startAsNumber = checkCharacter("start", start);
 			endAsNumber = checkCharacter("end", end);
 		} else {
-			throw new TypeError(`Arguments \`start\` and \`end\` must be bigints, numbers, or strings (character)!`);
+			throw new TypeError(`Arguments \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
 		}
 		let step = 1;
 		if (typeof options.step === "number" && !Number.isNaN(options.step)) {
 			if (!(options.step > 0)) {
-				throw new RangeError(`Argument \`options.step\` must be a number which is > 0!`);
+				throw new RangeError(`Argument \`options.step\` is not a number which is > 0!`);
 			}
 			step = options.step;
 		} else if (typeof options.step !== "undefined") {
-			throw new TypeError(`Argument \`options.step\` must be a number or undefined!`);
+			throw new TypeError(`Argument \`options.step\` is not a number or undefined!`);
 		}
 		if (resultIsString) {
 			return rangeLooper<string>({
