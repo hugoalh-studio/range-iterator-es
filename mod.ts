@@ -1,16 +1,25 @@
 type RangeIndexType<T> = T extends bigint ? bigint : number;
 /**
+ * Resolve code point of the character.
  * @access private
- * @param {string} name
- * @param {string} value
- * @returns {number}
+ * @param {string} argumentName Argument name.
+ * @param {string} value Character.
+ * @returns {number} Code point of the character.
  */
-function checkCharacter(name: string, value: string): number {
-	const valueSplit: string[] = [...value];
-	if (valueSplit.length !== 1) {
-		throw new RangeError(`\`${valueSplit.join(" ")}\` (argument \`${name}\`) is not a character which is in code point range 0 ~ 1114111!`);
+function resolveCharacterCodePoint(argumentName: string, value: string): number {
+	try {
+		const valueSplit: string[] = [...value];
+		if (valueSplit.length !== 1) {
+			throw undefined;
+		}
+		const characterCodePoint: number | undefined = value.codePointAt(0);
+		if (typeof characterCodePoint === "undefined") {
+			throw undefined;
+		}
+		return characterCodePoint;
+	} catch {
+		throw new RangeError(`\`${value}\` (argument \`${argumentName}\`) is not a character which is in code point range 0 ~ 1114111!`);
 	}
-	return value.codePointAt(0) as number;
 }
 /**
  * @access private
@@ -28,12 +37,12 @@ interface RangeLooperParameters<T extends bigint | number | string> {
  * @param {RangeLooperParameters<T>} param
  * @returns {Generator<T, void, unknown>}
  */
-function* rangeLooper<T extends bigint | number | string>(param: RangeLooperParameters<T>): Generator<T, void, unknown> {
-	const isReverse: boolean = param.start > param.end;
+function* rangeLooper<T extends bigint | number | string>({ end, endExclusive, resultIsString, start, step }: RangeLooperParameters<T>): Generator<T, void, unknown> {
+	const isReverse: boolean = start > end;
 	//@ts-ignore All of the types are compatible.
-	for (let current: RangeLooperParameters<T>["start"] = param.start; isReverse ? current >= param.end : current <= param.end; current += isReverse ? -param.step : param.step) {
-		if (!(param.endExclusive && current === param.end)) {
-			if (param.resultIsString) {
+	for (let current: RangeLooperParameters<T>["start"] = start; isReverse ? (current >= end) : (current <= end); current += isReverse ? -step : step) {
+		if (!(endExclusive && current === end)) {
+			if (resultIsString) {
 				yield String.fromCodePoint(current as number) as T;
 			} else {
 				yield current as T;
@@ -115,69 +124,58 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 			step: options
 		};
 	}
-	let endExclusive = false;
-	options.endExclusive ??= options.exclusiveEnd;
-	if (typeof options.endExclusive === "boolean") {
-		endExclusive = options.endExclusive;
-	} else if (typeof options.endExclusive !== "undefined") {
-		throw new TypeError(`Argument \`options.endExclusive\` is not a boolean or undefined!`);
-	}
+	const optionsEndExclusive: boolean = options.endExclusive ?? options.exclusiveEnd ?? false;
 	if (typeof start === "bigint" && typeof end === "bigint") {
-		let step = 1n;
+		let optionsStep = 1n;
 		if (typeof options.step === "bigint") {
 			if (!(options.step > 0n)) {
-				throw new RangeError(`Argument \`options.step\` is not a bigint which is > 0n!`);
+				throw new RangeError(`Argument \`options.step\` is not a bigint which is > 0!`);
 			}
-			step = options.step;
-		} else if (typeof options.step !== "undefined") {
-			throw new TypeError(`Argument \`options.step\` is not a bigint or undefined!`);
+			optionsStep = options.step;
 		}
 		return rangeLooper<bigint>({
 			end,
-			step,
-			endExclusive,
+			endExclusive: optionsEndExclusive,
 			resultIsString: false,
-			start
-		}) as Generator<T, void, unknown>;
-	} else {
-		let endAsNumber: number;
-		let startAsNumber: number;
-		let resultIsString = false;
-		if (typeof start === "number" && !Number.isNaN(start) && typeof end === "number" && !Number.isNaN(end)) {
-			endAsNumber = end;
-			startAsNumber = start;
-		} else if (typeof start === "string" && typeof end === "string") {
-			resultIsString = true;
-			startAsNumber = checkCharacter("start", start);
-			endAsNumber = checkCharacter("end", end);
-		} else {
-			throw new TypeError(`Arguments \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
-		}
-		let step = 1;
-		if (typeof options.step === "number" && !Number.isNaN(options.step)) {
-			if (!(options.step > 0)) {
-				throw new RangeError(`Argument \`options.step\` is not a number which is > 0!`);
-			}
-			step = options.step;
-		} else if (typeof options.step !== "undefined") {
-			throw new TypeError(`Argument \`options.step\` is not a number or undefined!`);
-		}
-		if (resultIsString) {
-			return rangeLooper<string>({
-				end: endAsNumber,
-				endExclusive,
-				resultIsString: true,
-				start: startAsNumber,
-				step
-			}) as Generator<T, void, unknown>;
-		}
-		return rangeLooper<number>({
-			end: endAsNumber,
-			endExclusive,
-			resultIsString: false,
-			start: startAsNumber,
-			step
+			start,
+			step: optionsStep
 		}) as Generator<T, void, unknown>;
 	}
+	let resultIsString = false;
+	let startAsNumber: number;
+	let endAsNumber: number;
+	if (typeof start === "number" && typeof end === "number") {
+		startAsNumber = start;
+		endAsNumber = end;
+	} else if (typeof start === "string" && typeof end === "string") {
+		resultIsString = true;
+		startAsNumber = resolveCharacterCodePoint("start", start);
+		endAsNumber = resolveCharacterCodePoint("end", end);
+	} else {
+		throw new TypeError(`Arguments \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
+	}
+	let optionsStep = 1;
+	if (typeof options.step === "number") {
+		if (!(options.step > 0)) {
+			throw new RangeError(`Argument \`options.step\` is not a number which is > 0!`);
+		}
+		optionsStep = options.step;
+	}
+	if (resultIsString) {
+		return rangeLooper<string>({
+			end: endAsNumber,
+			endExclusive: optionsEndExclusive,
+			resultIsString: true,
+			start: startAsNumber,
+			step: optionsStep
+		}) as Generator<T, void, unknown>;
+	}
+	return rangeLooper<number>({
+		end: endAsNumber,
+		endExclusive: optionsEndExclusive,
+		resultIsString: false,
+		start: startAsNumber,
+		step: optionsStep
+	}) as Generator<T, void, unknown>;
 }
 export default rangeIterator;
