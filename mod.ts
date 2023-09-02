@@ -116,10 +116,7 @@ export function rangeIterator(start: number, end: number, options?: RangeIterato
  */
 export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string, void, unknown>;
 export function rangeIterator<T extends bigint | number | string>(start: T, end: T, options: RangeIteratorOptions<T>["step"] | RangeIteratorOptions<T> = {}): Generator<T, void, unknown> {
-	if (
-		typeof options === "bigint" ||
-		typeof options === "number"
-	) {
+	if (typeof options !== "object") {
 		options = {
 			step: options
 		};
@@ -127,11 +124,11 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 	const optionsEndExclusive: boolean = options.endExclusive ?? options.exclusiveEnd ?? false;
 	if (typeof start === "bigint" && typeof end === "bigint") {
 		let optionsStep = 1n;
-		if (typeof options.step === "bigint") {
+		if (typeof options.step !== "undefined") {
 			if (!(options.step > 0n)) {
 				throw new RangeError(`Argument \`options.step\` is not a bigint which is > 0!`);
 			}
-			optionsStep = options.step;
+			optionsStep = options.step as bigint;
 		}
 		return rangeLooper<bigint>({
 			end,
@@ -155,11 +152,11 @@ export function rangeIterator<T extends bigint | number | string>(start: T, end:
 		throw new TypeError(`Arguments \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
 	}
 	let optionsStep = 1;
-	if (typeof options.step === "number") {
+	if (typeof options.step !== "undefined") {
 		if (!(options.step > 0)) {
 			throw new RangeError(`Argument \`options.step\` is not a number which is > 0!`);
 		}
-		optionsStep = options.step;
+		optionsStep = options.step as number;
 	}
 	if (resultIsString) {
 		return rangeLooper<string>({
