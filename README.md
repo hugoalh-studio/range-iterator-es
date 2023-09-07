@@ -13,11 +13,14 @@ A Deno module to iterate between range.
 >
 > - [NodeJS](https://github.com/hugoalh-studio/range-iterator-nodejs)
 
-## 🎯 Target
-
-- Deno >= v1.34.0
-
 ## 📥 Import
+
+### Deno
+
+- **Target Version:** >= v1.34.0
+- **Require Permission:** *N/A*
+
+#### From
 
 > **ℹ️ Notice:** Although it is recommended to import with default module path `mod.ts` in general, it is also able to import with submodule path (if available), but do not import that submodule if either:
 >
