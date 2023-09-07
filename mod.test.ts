@@ -3,7 +3,7 @@ import { rangeIterator } from "./mod.ts";
 Deno.test("Number 1~9", { permissions: "none" }, () => {
 	assertEquals(Array.from(rangeIterator(1, 9)), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
-Deno.test("Big Integer 1~9 End Exclusive", { permissions: "none" }, () => {
+Deno.test("BigInteger 1~9 EndExclusive", { permissions: "none" }, () => {
 	assertEquals(Array.from(rangeIterator(1n, 9n, { endExclusive: true })), [1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n]);
 });
 Deno.test("Number 1~9 Step 0.5", { permissions: "none" }, () => {
@@ -15,7 +15,7 @@ Deno.test("Character a~z", { permissions: "none" }, () => {
 Deno.test("Number 9~1", { permissions: "none" }, () => {
 	assertEquals(Array.from(rangeIterator(9, 1)), [9, 8, 7, 6, 5, 4, 3, 2, 1]);
 });
-Deno.test("Big Integer 9~1 End Exclusive", { permissions: "none" }, () => {
+Deno.test("BigInteger 9~1 EndExclusive", { permissions: "none" }, () => {
 	assertEquals(Array.from(rangeIterator(9n, 1n, { endExclusive: true })), [9n, 8n, 7n, 6n, 5n, 4n, 3n, 2n]);
 });
 Deno.test("Number 9~1 Step 0.5", { permissions: "none" }, () => {

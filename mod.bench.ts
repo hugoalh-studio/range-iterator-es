@@ -4,7 +4,7 @@ Deno.bench("Number 1~9", { permissions: "none" }, () => {
 		iterator;
 	}
 });
-Deno.bench("Big Integer 1~9 End Exclusive", { permissions: "none" }, () => {
+Deno.bench("BigInteger 1~9 EndExclusive", { permissions: "none" }, () => {
 	for (const iterator of rangeIterator(1n, 9n, { endExclusive: true })) {
 		iterator;
 	}
@@ -24,7 +24,7 @@ Deno.bench("Number 9~1", { permissions: "none" }, () => {
 		iterator;
 	}
 });
-Deno.bench("Big Integer 9~1 End Exclusive", { permissions: "none" }, () => {
+Deno.bench("BigInteger 9~1 EndExclusive", { permissions: "none" }, () => {
 	for (const iterator of rangeIterator(9n, 1n, { endExclusive: true })) {
 		iterator;
 	}
@@ -40,7 +40,7 @@ Deno.bench("Character z~a", { permissions: "none" }, () => {
 	}
 });
 
-Deno.bench("Big Integer 1~100", { permissions: "none" }, () => {
+Deno.bench("BigInteger 1~100", { permissions: "none" }, () => {
 	for (const iterator of rangeIterator(1n, 100n)) {
 		iterator;
 	}
@@ -50,12 +50,12 @@ Deno.bench("Number 1~100", { permissions: "none" }, () => {
 		iterator;
 	}
 });
-Deno.bench("Character CodePoint 0~1114111", { permissions: "none" }, () => {
+Deno.bench("CharacterCodePoint 0~1114111", { permissions: "none" }, () => {
 	for (const iterator of rangeIterator(String.fromCodePoint(0), String.fromCodePoint(0x10FFFF))) {
 		iterator;
 	}
 });
-Deno.bench("Big Integer 100~1", { permissions: "none" }, () => {
+Deno.bench("BigInteger 100~1", { permissions: "none" }, () => {
 	for (const iterator of rangeIterator(100n, 1n)) {
 		iterator;
 	}
@@ -65,7 +65,7 @@ Deno.bench("Number 100~1", { permissions: "none" }, () => {
 		iterator;
 	}
 });
-Deno.bench("Character CodePoint 1114111~0", { permissions: "none" }, () => {
+Deno.bench("CharacterCodePoint 1114111~0", { permissions: "none" }, () => {
 	for (const iterator of rangeIterator(String.fromCodePoint(0x10FFFF), String.fromCodePoint(0))) {
 		iterator;
 	}
