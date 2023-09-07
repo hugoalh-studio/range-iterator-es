@@ -1,4 +1,4 @@
-import rangeIterator from "./mod.ts";
+import { rangeIterator } from "./mod.ts";
 Deno.bench("Number 1~9", { permissions: "none" }, () => {
 	for (const iterator of rangeIterator(1, 9)) {
 		iterator;
