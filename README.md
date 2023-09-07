@@ -73,34 +73,50 @@ A Deno module to iterate between range.
 ### Example
 
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator(1, 9));
   //=> [1, 2, 3, 4, 5, 6, 7, 8, 9]
   ```
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator(1n, 9n, { endExclusive: true }));
   //=> [1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n]
   ```
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator(1, 9, { step: 0.5 }));
   //=> [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9]
   ```
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator("a", "z"));
   //=> ["a", "b", "c", ... +20 ..., "x", "y", "z"]
   ```
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator(9, 1));
   //=> [9, 8, 7, 6, 5, 4, 3, 2, 1]
   ```
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator(9n, 1n, { endExclusive: true }));
   //=> [9n, 8n, 7n, 6n, 5n, 4n, 3n, 2n]
   ```
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator(9, 1, { step: 0.5 }));
   //=> [9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1]
   ```
 - ```ts
+  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+
   Array.from(rangeIterator("z", "a"));
   //=> ["z", "y", "x", ... +20 ..., "c", "b", "a"]
   ```
