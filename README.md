@@ -9,45 +9,39 @@
 
 A Deno module to iterate between range.
 
-> **🔗 Other Edition:**
->
-> - [NodeJS](https://github.com/hugoalh-studio/range-iterator-nodejs)
-
 ## 📥 Import
 
 ### Deno
 
 - **Target Version:** >= v1.34.0
 - **Require Permission:** *N/A*
+- **Domain/Registry:**
+  - **[Deno Land](https://deno.land/x/range_iterator):**
+    ```
+    https://deno.land/x/range_iterator[@<Tag>]/mod.ts
+    ```
+  - **DenoPKG:**
+    ```
+    https://denopkg.com/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts
+    ```
+  - **GitHub Raw *\[Require Tag\]*:**
+    ```
+    https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/<Tag>/mod.ts
+    ```
+  - **Pax:**
+    ```
+    https://pax.deno.dev/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts
+    ```
 
-#### From
-
-> **ℹ️ Notice:** Although it is recommended to import with default module path `mod.ts` in general, it is also able to import with submodule path (if available), but do not import that submodule if either:
+> **ℹ️ Notice:** Although it is recommended to import module with main path `mod.ts` in general, it is also able to import part of the module with sub path (if available), but do not import if:
 >
-> - It's file path has an underscore prefix (e.g.: `_foo.ts`, `_util/bar.ts`).
-> - It is a benchmark or test file (e.g.: `foo.bench.ts`, `foo.test.ts`).
-> - It's symbol has an underscore prefix (e.g.: `export function _baz() {}`).
+> - it's file path has an underscore prefix (e.g.: `_foo.ts`, `_util/bar.ts`), or
+> - it is a benchmark or test file (e.g.: `foo.bench.ts`, `foo.test.ts`), or
+> - it's symbol has an underscore prefix (e.g.: `export function _baz() {}`).
 >
 > These elements are not considered part of the public API, thus no stability is guaranteed for them.
 
-- **[Deno Land](https://deno.land/x/range_iterator):**
-  ```
-  https://deno.land/x/range_iterator[@<Tag>]/mod.ts
-  ```
-- **DenoPKG:**
-  ```
-  https://denopkg.com/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts
-  ```
-- **GitHub Raw *\[Require Tag\]*:**
-  ```
-  https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/<Tag>/mod.ts
-  ```
-- **Pax:**
-  ```
-  https://pax.deno.dev/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts
-  ```
-
-## API
+## 🧩 API
 
 - ```ts
   function rangeIterator(start: bigint, end: bigint, step?: RangeIteratorOptions<bigint>["step"]): Generator<bigint, void, unknown>;
@@ -73,53 +67,41 @@ A Deno module to iterate between range.
   }
   ```
 
-### Example
+> **ℹ️ Notice:** Documentation is included inside the script file, can view it via:
+>
+> - [Deno CLI `deno doc`](https://deno.land/manual/tools/documentation_generator)
+> - [Deno Doc Land](https://doc.deno.land)
+
+## ✍️ Example
 
 - ```ts
   import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator(1, 9));
   //=> [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  ```
-- ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator(1n, 9n, { endExclusive: true }));
   //=> [1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n]
-  ```
-- ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator(1, 9, { step: 0.5 }));
   //=> [1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9]
-  ```
-- ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator("a", "z"));
   //=> ["a", "b", "c", ... +20 ..., "x", "y", "z"]
-  ```
-- ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator(9, 1));
   //=> [9, 8, 7, 6, 5, 4, 3, 2, 1]
-  ```
-- ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator(9n, 1n, { endExclusive: true }));
   //=> [9n, 8n, 7n, 6n, 5n, 4n, 3n, 2n]
-  ```
-- ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator(9, 1, { step: 0.5 }));
   //=> [9, 8.5, 8, 7.5, 7, 6.5, 6, 5.5, 5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1]
-  ```
-- ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator("z", "a"));
   //=> ["z", "y", "x", ... +20 ..., "c", "b", "a"]
   ```
+
+## 🔗 Other Edition
+
+- [NodeJS](https://github.com/hugoalh-studio/range-iterator-nodejs)
