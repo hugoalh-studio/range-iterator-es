@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Code Review (Deno)"
+name: "Code Review - Deno"
 on:
   push:
     branches:
