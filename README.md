@@ -9,28 +9,28 @@
 
 A Deno module to iterate between range.
 
-## 📥 Import
+## 🔰 Begin
 
 ### Deno
 
 - **Target Version:** >= v1.34.0
 - **Require Permission:** *N/A*
 - **Domain/Registry:**
-  - **[Deno Land](https://deno.land/x/range_iterator):**
+  - [Deno Land](https://deno.land/x/range_iterator)
+    ```ts
+    import ... from "https://deno.land/x/range_iterator[@<Tag>]/mod.ts";
     ```
-    https://deno.land/x/range_iterator[@<Tag>]/mod.ts
+  - DenoPKG
+    ```ts
+    import ... from "https://denopkg.com/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts";
     ```
-  - **DenoPKG:**
+  - GitHub Raw *\[Require Tag\]*
+    ```ts
+    import ... from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/<Tag>/mod.ts";
     ```
-    https://denopkg.com/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts
-    ```
-  - **GitHub Raw *\[Require Tag\]*:**
-    ```
-    https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/<Tag>/mod.ts
-    ```
-  - **Pax:**
-    ```
-    https://pax.deno.dev/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts
+  - Pax
+    ```ts
+    import ... from "https://pax.deno.dev/hugoalh-studio/range-iterator-deno[@<Tag>]/mod.ts";
     ```
 
 > **ℹ️ Notice:** Although it is recommended to import main module with path `mod.ts` in general, it is also able to import part of the module with sub path if available, but do not import if:
