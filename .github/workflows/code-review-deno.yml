@@ -19,4 +19,4 @@ on:
 jobs:
   main:
     name: "Main"
-    uses: "hugoalh/hugoalh/.github/workflows/code-review-deno.yml@main"
+    uses: "hugoalh/hugoalh/.github/workflows/reusable-code-review-deno.yml@main"
