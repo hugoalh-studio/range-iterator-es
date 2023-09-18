@@ -75,7 +75,7 @@ A Deno module to iterate between range.
 ## ✍️ Example
 
 - ```ts
-  import rangeIterator from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
+  import { rangeIterator } from "https://raw.githubusercontent.com/hugoalh-studio/range-iterator-deno/main/mod.ts";
 
   Array.from(rangeIterator(1, 9));
   //=> [1, 2, 3, 4, 5, 6, 7, 8, 9]
