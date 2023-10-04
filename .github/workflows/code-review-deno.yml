@@ -18,5 +18,12 @@ on:
   workflow_dispatch:
 jobs:
   main:
-    name: "Main"
-    uses: "hugoalh/hugoalh/.github/workflows/reusable-code-review-deno.yml@main"
+    name: "${{matrix.runs-on}}"
+    strategy:
+      matrix:
+        runs-on:
+          - "ubuntu-latest"
+      fail-fast: false
+    uses: "hugoalh/hugoalh/.github/workflows/reusable-code-review-deno-1.yml@main"
+    with:
+      runs-on: "${{matrix.runs-on}}"
