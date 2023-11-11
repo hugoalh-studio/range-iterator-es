@@ -2,18 +2,21 @@
 
 ## Supported Versions
 
-> | **Legend** | **Description** |
-> |:-:|:--|
-> | L | **LTS:** Long term supported. |
-> | ✔️ | **Active / Current:** Currently supported. |
-> | 👎{🐛} | **Partially (Issue):** Partially supported due to confirmed contains bugs and/or issues. |
-> | 👎{🧓} | **Partially (Old):** Partially supported due to deprecated by newer versions. |
-> | ❌{🐛} | **No (Issue):** Not supported due to confirmed contains bugs and/or issues. |
-> | ❌{🧓} | **No (Old):** Not supported due to too old. |
+> | **Support** | **Legend** | **Description** |
+> |:-:|:-:|:--|
+> | ✔️ | 🟤 | Pending / Pre Release / Unstable |
+> | ✔️ | 🔵 | Current Release |
+> | ✔️ | 🟢 | Long Term Support |
+> | ❌ | 🔴 | End of Life |
 
-| **Versions** | **Status** | **Target - Deno** |
-|:-:|:-:|:-:|
-| v1.X.X | L | >= v1.34.0 |
+| **Versions** | **Status** | **🔵 Date** | **🟢 Date** | **🔴 Date** | **Target - Deno** |
+|:-:|:-:|:-:|:-:|:-:|:-:|
+| v1.0.X | 🟢 | 2023-08-23 | 2023-09-01 | *Unknown* | >= v1.34.0 |
+
+> **ℹ️ Notice:**
+>
+> - The date format is according to ISO 8601 standard.
+> - Versions which not in the list are also end of life.
 
 ## Report Vulnerability
 
