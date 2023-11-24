@@ -37,7 +37,7 @@ interface RangeLooperParameters<T extends bigint | number | string> {
 /**
  * @access private
  * @template {bigint | number | string} T
- * @param {RangeLooperParameters<T>} param
+ * @param {RangeLooperParameters<T>} param0
  * @returns {Generator<T, void, unknown>}
  */
 function* rangeLooper<T extends bigint | number | string>({ end, endExclusive, resultIsString, start, step }: RangeLooperParameters<T>): Generator<T, void, unknown> {
