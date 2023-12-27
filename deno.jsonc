@@ -8,6 +8,9 @@
 		"singleQuote": false,
 		"useTabs": true
 	},
+	"imports": {
+		// Only remap development dependencies! For more information, please visit https://docs.deno.com/runtime/manual/basics/import_maps.
+	},
 	"lint": {
 		"rules": {
 			"tags": [
