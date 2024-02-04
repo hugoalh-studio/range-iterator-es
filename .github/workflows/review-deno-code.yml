@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Deno - Code Review"
+name: "Review Deno Code"
 on:
   push:
     branches:
@@ -15,16 +15,16 @@ on:
   schedule:
     - cron: "0 0 * * SUN"
   workflow_dispatch:
-permissions:
-  contents: "read"
 jobs:
   main:
     name: "${{matrix.runs-on}}"
+    permissions:
+      contents: "read"
     strategy:
       matrix:
         runs-on:
           - "ubuntu-latest"
       fail-fast: false
-    uses: "hugoalh/hugoalh/.github/workflows/call-deno-code-review-0.yml@main"
+    uses: "hugoalh/hugoalh/.github/workflows/call-review-deno-code-0.yml@main"
     with:
       runs-on: "${{matrix.runs-on}}"
