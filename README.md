@@ -1,7 +1,6 @@
 # Range Iterator (Deno)
 
 [⚖️ MIT](./LICENSE.md)
-[![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/hugoalh-studio/range-iterator-deno?label=Grade&logo=codefactor&logoColor=ffffff&style=flat-square "CodeFactor Grade")](https://www.codefactor.io/repository/github/hugoalh-studio/range-iterator-deno)
 
 |  | **Release - Latest** | **Release - Pre** |
 |:-:|:-:|:-:|
@@ -15,7 +14,7 @@ A Deno module to iterate between range.
 
 - **Target Version:** >= v1.34.0
 - **Require Permission:** *N/A*
-- **Domain/Registry:**
+- **Registry:**
   - [Deno Land](https://deno.land/x/range_iterator)
     ```ts
     import ... from "https://deno.land/x/range_iterator[@<Tag>]/mod.ts";

@@ -10,7 +10,7 @@
 	},
 	"imports": {
 		// Only remap development dependencies! For more information, please visit https://docs.deno.com/runtime/manual/basics/import_maps.
-		"TEST/": "https://deno.land/std@0.214.0/assert/"
+		"TEST/": "https://deno.land/std@0.217.0/assert/"
 	},
 	"lint": {
 		"rules": {
@@ -18,13 +18,17 @@
 				"recommended"
 			],
 			"include": [
+				"default-param-last",
 				"eqeqeq",
 				"guard-for-in",
 				"no-const-assign",
 				"no-eval",
+				"no-non-null-asserted-optional-chain",
 				"no-self-compare",
 				"no-sparse-arrays",
-				"no-sync-fn-in-async-fn"
+				"no-sync-fn-in-async-fn",
+				"no-undef",
+				"triple-slash-reference"
 			]
 		}
 	},
