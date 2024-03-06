@@ -17,14 +17,14 @@ on:
   workflow_dispatch:
 jobs:
   main:
-    name: "${{matrix.runs-on}}"
+    name: "${{matrix.runon}}"
     permissions:
       contents: "read"
     strategy:
       matrix:
-        runs-on:
+        runon:
           - "ubuntu-latest"
       fail-fast: false
-    uses: "hugoalh/hugoalh/.github/workflows/call-review-deno-code-0.yml@main"
+    uses: "hugoalh/hugoalh/.github/workflows/call-review-deno-code-1.yml@main"
     with:
-      runs-on: "${{matrix.runs-on}}"
+      runon: "${{matrix.runon}}"

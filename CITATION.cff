@@ -1,13 +1,14 @@
 # yaml-language-server: $schema=https://citation-file-format.github.io/1.2.0/schema.json
 cff-version: "1.2.0"
-title: "Range Iterator (Deno)"
+title: "Range Iterator (TypeScript)"
 message: "If you use this software, please cite it using the metadata from this file."
 type: "software"
 authors:
   - name: "hugoalh Studio"
-repository-code: "https://github.com/hugoalh-studio/range-iterator-deno"
+repository-code: "https://github.com/hugoalh-studio/range-iterator-ts"
 keywords:
-  - "deno"
   - "iterator"
   - "range"
+  - "ts"
+  - "typescript"
 license: "MIT"
