@@ -150,7 +150,7 @@ A TypeScript module to iterate between range.
 > For the prettier documentation, can visit via:
 >
 > - [Deno CLI `deno doc`](https://deno.land/manual/tools/documentation_generator)
-> - [JSR](https://jsr.io/@hugoalh/shuffle-array)
+> - [JSR](https://jsr.io/@hugoalh/range-iterator)
 
 ## ✍️ Example
 
