@@ -21,20 +21,23 @@ jobs:
 
                 Version ${{github.event.release.name}} (${{github.event.release.tag_name}}) just released!
               timestamp: "${{github.event.release.published_at}}"
-              color: "#000000"
-              thumbnail:
-                url: "https://i.imgur.com/r4wRkZ5.png"
+              color: "#3178C6"
+              # thumbnail:
+              #   url: "https://i.imgur.com/r4wRkZ5.png"
               author:
                 name: "${{github.event.release.author.login}}"
                 url: "${{github.event.release.author.html_url}}"
                 icon_url: "${{github.event.release.author.avatar_url}}"
               fields:
+                - name: "Release & Changelog (GitHub Release)"
+                  value: "${{github.event.release.html_url}}"
+                  inline: false
                 - name: "Deno Land"
                   value: "https://deno.land/x/range_iterator"
                   inline: false
-                - name: "GitHub - Release & Changelog"
-                  value: "${{github.event.release.html_url}}"
-                  inline: false
-                - name: "GitHub - Repository"
+                - name: "GitHub"
                   value: "${{github.event.repository.html_url}}"
+                  inline: false
+                - name: "JSR"
+                  value: "https://jsr.io/@hugoalh/range-iterator"
                   inline: false
