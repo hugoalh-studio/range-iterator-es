@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: "Publish Deno Package"
+on:
+  release:
+    types:
+      - "published"
+jobs:
+  main:
+    name: "Main"
+    permissions:
+      contents: "read"
+      id-token: "write"
+    uses: "hugoalh/hugoalh/.github/workflows/call-publish-deno-package-0.yml@main"
