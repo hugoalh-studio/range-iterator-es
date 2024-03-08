@@ -1,7 +1,7 @@
 // This file is only for JSR related, non-JSR related must set in file `deno.jsonc`!
 {
 	"name": "@hugoalh/range-iterator",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"exports": {
 		".": "./mod.ts"
 	},
@@ -12,8 +12,7 @@
 		"**/*.cff",
 		"**/*.test.ts",
 		"deno.jsonc",
-		"SECURITY.md",
-		"targets.tsv"
+		"SECURITY.md"
 	],
 	"include": [
 		// `exclude` and `include` have incorrect behaviours! For more information, please visit https://github.com/denoland/deno/issues/22648.
