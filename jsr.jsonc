@@ -12,9 +12,9 @@
 			"**/*.test.ts"
 		],
 		"include": [
+			"**/*.ts",
 			"jsr.jsonc",
 			"LICENSE*.md",
-			"**/*.ts",
 			"README*.md"
 		]
 	}
