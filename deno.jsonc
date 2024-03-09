@@ -32,5 +32,9 @@
 			]
 		}
 	},
-	"lock": false
+	"lock": false,
+	"tasks": {
+		// `deno publish` have weird behaviours, always check via the task `jsr-check` before release! For more information, please visit https://github.com/denoland/deno/issues/22648.
+		"jsr-check": "deno publish --config jsr.jsonc --dry-run --no-provenance"
+	}
 }
