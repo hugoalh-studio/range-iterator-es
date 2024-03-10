@@ -10,7 +10,7 @@
 	},
 	"imports": {
 		// Only remap development dependencies! For more information, please visit https://docs.deno.com/runtime/manual/basics/import_maps.
-		"TEST/": "https://deno.land/std@0.219.0/assert/"
+		"TEST/": "https://deno.land/std@0.219.1/assert/"
 	},
 	"lint": {
 		"rules": {
