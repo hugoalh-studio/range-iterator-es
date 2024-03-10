@@ -12,7 +12,7 @@
 >   Release("Release")
 >   LTS("Long Term Support")
 >   Maintenance("Maintenance")
->   EOL("End Of Life / Not Supported")
+>   EOL("End Of Life")
 >   Unstable --> Pre
 >   Pre --> Release
 >   subgraph Support
@@ -23,7 +23,7 @@
 >   Maintenance --> EOL
 > ```
 
-| **Versions** | **Release Date** | **Long Term Support Date** | **End Of Life Date / Not Supported Date** |
+| **Versions** | **Release Date** | **Long Term Support Date** | **End Of Life Date** |
 |:-:|:-:|:-:|:-:|
 | v1.X.X | 2023-08-23 | 2023-09-01 | *Unknown* |
 

@@ -8,11 +8,22 @@
 	"imports": { },
 	"publish": {
 		"exclude": [
+			"**/*_bench.ts",
+			"**/*_bench.tsx",
+			"**/*_test.ts",
+			"**/*_test.tsx",
 			"**/*.bench.ts",
-			"**/*.test.ts"
+			"**/*.bench.tsx",
+			"**/*.test.ts",
+			"**/*.test.tsx",
+			"**/bench.ts",
+			"**/bench.tsx",
+			"**/test.ts",
+			"**/test.tsx"
 		],
 		"include": [
 			"**/*.ts",
+			"**/*.tsx",
 			"jsr.jsonc",
 			"LICENSE*.md",
 			"README*.md"
