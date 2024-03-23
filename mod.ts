@@ -1,7 +1,5 @@
-/**
- * @access private
- */
-type RangeIndexType<T> = T extends bigint ? bigint : number;
+type RangeIteratorType = bigint | number | string;
+type RangeIndexType<T extends RangeIteratorType> = T extends bigint ? bigint : number;
 /**
  * Resolve code point of the character.
  * @access private
@@ -24,10 +22,7 @@ function resolveCharacterCodePoint(argumentName: string, value: string): number 
 		throw new RangeError(`\`${value}\` (argument \`${argumentName}\`) is not a character which is in code point range 0 ~ 1114111!`);
 	}
 }
-/**
- * @access private
- */
-interface RangeLooperParameters<T extends bigint | number | string> {
+interface RangeLooperParameters<T extends RangeIteratorType> {
 	end: RangeIndexType<T>;
 	endExclusive: boolean;
 	resultIsString: T extends string ? true : false;
@@ -36,11 +31,11 @@ interface RangeLooperParameters<T extends bigint | number | string> {
 }
 /**
  * @access private
- * @template {bigint | number | string} T
+ * @template {RangeIteratorType} T
  * @param {RangeLooperParameters<T>} param0
  * @returns {Generator<T>}
  */
-function* rangeLooper<T extends bigint | number | string>({ end, endExclusive, resultIsString, start, step }: RangeLooperParameters<T>): Generator<T> {
+function* rangeLooper<T extends RangeIteratorType>({ end, endExclusive, resultIsString, start, step }: RangeLooperParameters<T>): Generator<T> {
 	const isReverse: boolean = start > end;
 	//@ts-ignore All of the types are compatible.
 	for (let current: RangeLooperParameters<T>["start"] = start; isReverse ? (current >= end) : (current <= end); current += isReverse ? -step : step) {
@@ -56,7 +51,7 @@ function* rangeLooper<T extends bigint | number | string>({ end, endExclusive, r
 /**
  * Range iterator options.
  */
-export interface RangeIteratorOptions<T> {
+export interface RangeIteratorOptions<T extends RangeIteratorType> {
 	/**
 	 * Whether to exclusive end.
 	 * @default false
@@ -68,7 +63,11 @@ export interface RangeIteratorOptions<T> {
 	 * @default 1 // Number/String.
 	 */
 	step?: RangeIndexType<T>;
-	/** @alias endExclusive */exclusiveEnd?: this["endExclusive"];
+	/**
+	 * Whether to exclusive end; Alias of {@linkcode endExclusive}.
+	 * @default false
+	 */
+	exclusiveEnd?: this["endExclusive"];
 }
 /**
  * Range iterator with big integers.
@@ -160,7 +159,7 @@ export function rangeIterator(start: number, end: number, options?: RangeIterato
  * @returns {Generator<string>}
  */
 export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string>;
-export function rangeIterator<T extends bigint | number | string>(start: T, end: T, options: RangeIteratorOptions<T>["step"] | RangeIteratorOptions<T> = {}): Generator<T> {
+export function rangeIterator<T extends RangeIteratorType>(start: T, end: T, options: RangeIteratorOptions<T>["step"] | RangeIteratorOptions<T> = {}): Generator<T> {
 	if (typeof options !== "object") {
 		options = { step: options };
 	}
