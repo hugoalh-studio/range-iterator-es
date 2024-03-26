@@ -122,27 +122,33 @@ A TypeScript module to iterate between range.
 ## 🧩 API
 
 - ```ts
-  function rangeIterator(start: bigint, end: bigint, step?: RangeIteratorOptions<bigint>["step"]): Generator<bigint, void, unknown>;
-  function rangeIterator(start: number, end: number, step?: RangeIteratorOptions<number>["step"]): Generator<number, void, unknown>;
-  function rangeIterator(start: string, end: string, step?: RangeIteratorOptions<string>["step"]): Generator<string, void, unknown>;
-  function rangeIterator(start: bigint, end: bigint, options?: RangeIteratorOptions<bigint>): Generator<bigint, void, unknown>;
-  function rangeIterator(start: number, end: number, options?: RangeIteratorOptions<number>): Generator<number, void, unknown>;
-  function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string, void, unknown>;
+  function rangeIterator(start: bigint, end: bigint, step?: RangeIteratorOptions<bigint>["step"]): Generator<bigint>;
+  function rangeIterator(start: number, end: number, step?: RangeIteratorOptions<number>["step"]): Generator<number>;
+  function rangeIterator(start: string, end: string, step?: RangeIteratorOptions<string>["step"]): Generator<string>;
+  function rangeIterator(start: bigint, end: bigint, options?: RangeIteratorOptions<bigint>): Generator<bigint>;
+  function rangeIterator(start: number, end: number, options?: RangeIteratorOptions<number>): Generator<number>;
+  function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string>;
   ```
 - ```ts
-  interface RangeIteratorOptions<T> {
+  interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
     /**
     * Whether to exclusive end.
     * @default false
     */
     endExclusive?: boolean;
     /**
-    * Step of decrement/increment.
+    * Step of the decrement/increment of the iterate.
     * @default 1n // Big integer.
     * @default 1 // Number/String.
     */
-    step?: T extends bigint ? bigint : number;
+    step?: RangeIteratorIndexType<T>;
   }
+  ```
+- ```ts
+  type RangeIteratorAcceptType = bigint | number | string;
+  ```
+- ```ts
+  type RangeIteratorIndexType<T extends RangeIteratorAcceptType> = T extends bigint ? bigint : number;
   ```
 
 > **ℹ️ Note**
