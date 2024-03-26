@@ -200,13 +200,12 @@ export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: 
 			throw new RangeError(`Argument \`options.step\` is not a number which is > 0!`);
 		}
 	}
-	const step: number = (optionsResolve.step as number) ?? 1;
 	return rangeLooper<number | string>({
 		end: endAsNumber,
 		endExclusive: optionsEndExclusive,
 		resultIsString,
 		start: startAsNumber,
-		step
+		step: (optionsResolve.step as number) ?? 1
 	}) as Generator<T>;
 }
 export default rangeIterator;
