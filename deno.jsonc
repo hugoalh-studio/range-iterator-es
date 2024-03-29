@@ -28,13 +28,14 @@
 				"no-sparse-arrays",
 				"no-sync-fn-in-async-fn",
 				"no-undef",
-				"triple-slash-reference"
+				"triple-slash-reference",
+				"verbatim-module-syntax"
 			]
 		}
 	},
 	"lock": false,
 	"tasks": {
 		// `deno publish` have weird behaviours, always check via the task `jsr-check` before release! For more information, please visit https://github.com/denoland/deno/issues/22648.
-		"jsr-check": "deno publish --config jsr.jsonc --dry-run --no-provenance"
+		"jsr-check": "deno publish --allow-dirty --config jsr.jsonc --dry-run --no-provenance"
 	}
 }
