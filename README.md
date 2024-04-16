@@ -2,7 +2,7 @@
 
 [**⚖️** MIT](./LICENSE.md)
 
-[![Deno: range_iterator](https://img.shields.io/badge/dynamic/json?label=range_iterator&labelColor=000000&logo=deno&logoColor=ffffff&style=flat&url=https%3A%2F%2Fapiland.deno.dev%2Fv2%2Fmodules%2Frange_iterator&query=%24.latest_version)](https://deno.land/x/range_iterator)
+[![Deno Land: range_iterator](https://img.shields.io/badge/dynamic/json?label=range_iterator&labelColor=000000&logo=deno&logoColor=ffffff&style=flat&url=https%3A%2F%2Fapiland.deno.dev%2Fv2%2Fmodules%2Frange_iterator&query=%24.latest_version "Deno Land: range_iterator")](https://deno.land/x/range_iterator)
 [![GitHub: hugoalh-studio/range-iterator-es](https://img.shields.io/github/v/release/hugoalh-studio/range-iterator-es?label=hugoalh-studio/range-iterator-es&labelColor=181717&logo=github&logoColor=ffffff&sort=semver&style=flat "GitHub: hugoalh-studio/range-iterator-es")](https://github.com/hugoalh-studio/range-iterator-es)
 [![JSR: @hugoalh/range-iterator](https://img.shields.io/jsr/v/@hugoalh/range-iterator?label=JSR%20@hugoalh/range-iterator&labelColor=F7DF1E&logoColor=000000&style=flat "JSR: @hugoalh/range-iterator")](https://jsr.io/@hugoalh/range-iterator)
 [![NPM: @hugoalh/range-iterator](https://img.shields.io/npm/v/@hugoalh/range-iterator?label=@hugoalh/range-iterator&labelColor=CB3837&logo=npm&logoColor=ffffff&style=flat "NPM: @hugoalh/range-iterator")](https://www.npmjs.com/package/@hugoalh/range-iterator)
