@@ -127,7 +127,7 @@ export function rangeIterator(start: string, end: string, options?: RangeIterato
  * Range iterator with big integers.
  * @param {bigint} start A big integer to start the iterate.
  * @param {bigint} end A big integer to end the iterate.
- * @param {Required<RangeIteratorOptions<bigint>>["step"]} step Step of the decrement/increment of the iterate.
+ * @param {RangeIteratorIndexType<bigint>} step Step of the decrement/increment of the iterate.
  * @returns {Generator<bigint>}
  * @example
  * Array.from(rangeIterator(1n, 9n, 2n));
@@ -136,12 +136,12 @@ export function rangeIterator(start: string, end: string, options?: RangeIterato
  * Array.from(rangeIterator(9n, 1n, 2n));
  * //=> [9n, 7n, 5n, 3n, 1n]
  */
-export function rangeIterator(start: bigint, end: bigint, step: Required<RangeIteratorOptions<bigint>>["step"]): Generator<bigint>;
+export function rangeIterator(start: bigint, end: bigint, step: RangeIteratorIndexType<bigint>): Generator<bigint>;
 /**
  * Range iterator with numbers.
  * @param {number} start A number to start the iterate.
  * @param {number} end A number to end the iterate.
- * @param {Required<RangeIteratorOptions<number>>["step"]} step Step of the decrement/increment of the iterate.
+ * @param {RangeIteratorIndexType<number>} step Step of the decrement/increment of the iterate.
  * @returns {Generator<number>}
  * @example
  * Array.from(rangeIterator(1, 9, 2));
@@ -150,12 +150,12 @@ export function rangeIterator(start: bigint, end: bigint, step: Required<RangeIt
  * Array.from(rangeIterator(9, 1, 2));
  * //=> [9, 7, 5, 3, 1]
  */
-export function rangeIterator(start: number, end: number, step: Required<RangeIteratorOptions<number>>["step"]): Generator<number>;
+export function rangeIterator(start: number, end: number, step: RangeIteratorIndexType<number>): Generator<number>;
 /**
  * Range iterator with characters.
  * @param {string} start A character to start the iterate.
  * @param {string} end A character to end the iterate.
- * @param {Required<RangeIteratorOptions<string>>["step"]} step Step of the decrement/increment of the iterate.
+ * @param {RangeIteratorIndexType<string>} step Step of the decrement/increment of the iterate.
  * @returns {Generator<string>}
  * @example
  * Array.from(rangeIterator("a", "g", 2));
@@ -164,8 +164,8 @@ export function rangeIterator(start: number, end: number, step: Required<RangeIt
  * Array.from(rangeIterator("g", "a", 2));
  * //=> ["g", "e", "c", "a"]
  */
-export function rangeIterator(start: string, end: string, step?: Required<RangeIteratorOptions<string>>["step"]): Generator<string>;
-export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: T, param2?: RangeIteratorOptions<T> | Required<RangeIteratorOptions<T>>["step"]): Generator<T> {
+export function rangeIterator(start: string, end: string, step?: RangeIteratorIndexType<string>): Generator<string>;
+export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: T, param2?: RangeIteratorOptions<T> | RangeIteratorIndexType<T>): Generator<T> {
 	const options: RangeIteratorOptions<T> = (
 		typeof param2 === "bigint" ||
 		typeof param2 === "number"
