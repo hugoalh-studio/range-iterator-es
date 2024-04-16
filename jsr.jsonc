@@ -1,7 +1,7 @@
 // This file is only for JSR related, non-JSR related must set in the file `deno.jsonc`!
 {
 	"name": "@hugoalh/range-iterator",
-	"version": "1.0.6",
+	"version": "2.0.3",
 	"exports": {
 		".": "./mod.ts"
 	},
@@ -19,7 +19,9 @@
 			"**/bench.ts",
 			"**/bench.tsx",
 			"**/test.ts",
-			"**/test.tsx"
+			"**/test.tsx",
+			".dnt.ts",
+			"npm/**"
 		],
 		"include": [
 			"**/*.ts",

@@ -1,14 +1,18 @@
 # yaml-language-server: $schema=https://citation-file-format.github.io/1.2.0/schema.json
 cff-version: "1.2.0"
-title: "Range Iterator (TypeScript)"
+title: "Range Iterator (ES)"
 message: "If you use this software, please cite it using the metadata from this file."
 type: "software"
 authors:
   - name: "hugoalh Studio"
-repository-code: "https://github.com/hugoalh-studio/range-iterator-ts"
+repository-code: "https://github.com/hugoalh-studio/range-iterator-es"
 keywords:
+  - "es"
   - "iterate"
   - "iterator"
+  - "javascript"
+  - "js"
+  - "modulejs"
   - "range"
   - "ts"
   - "typescript"

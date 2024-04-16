@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: "Review Deno Code"
+name: "Invoke DevSkim Analysis"
 on:
   push:
     branches:
@@ -17,16 +17,9 @@ on:
   workflow_dispatch:
 jobs:
   main:
-    name: "${{matrix.run_on}}"
+    name: "Main"
     permissions:
+      actions: "read"
       contents: "read"
-    strategy:
-      matrix:
-        run_on:
-          - "ubuntu-latest"
-      fail-fast: false
-    uses: "hugoalh/hugoalh/.github/workflows/call-review-deno-code-2.yml@main"
-    with:
-      run_on: "${{matrix.run_on}}"
-      deployment_jsr: true
-      deployment_npm: true
+      security-events: "write"
+    uses: "hugoalh/hugoalh/.github/workflows/call-invoke-devskim-analysis-0.yml@main"

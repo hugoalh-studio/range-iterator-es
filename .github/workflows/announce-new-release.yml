@@ -15,13 +15,13 @@ jobs:
         with:
           key: "${{secrets.DISCORD_HXHS_PROJECTNEWRELEASEANNOUNCER_WEBHOOK}}"
           embeds: |
-            - title: "Range Iterator (TypeScript)"
+            - title: "Range Iterator (ES)"
               description: |
                 > ${{github.event.repository.description}}
 
                 Version ${{github.event.release.name}} (`${{github.event.release.tag_name}}`) just released!
               timestamp: "${{github.event.release.published_at}}"
-              color: "#3178C6"
+              color: "#F7DF1E"
               author:
                 name: "${{github.event.release.author.login}}"
                 url: "${{github.event.release.author.html_url}}"
@@ -38,4 +38,7 @@ jobs:
                   inline: false
                 - name: "JSR"
                   value: "https://jsr.io/@hugoalh/range-iterator"
+                  inline: false
+                - name: "NPM"
+                  value: "https://www.npmjs.com/package/@hugoalh/range-iterator"
                   inline: false
