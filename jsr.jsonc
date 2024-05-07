@@ -1,7 +1,7 @@
-// This file is only for JSR related, non-JSR related must set in the file `deno.jsonc`!
 {
+	"$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
 	"name": "@hugoalh/range-iterator",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"exports": {
 		".": "./mod.ts"
 	},
@@ -24,6 +24,7 @@
 			"npm/**"
 		],
 		"include": [
+			"**/*.json",
 			"**/*.ts",
 			"**/*.tsx",
 			"jsr.jsonc",

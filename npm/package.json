@@ -1,6 +1,6 @@
 {
 	"name": "@hugoalh/range-iterator",
-	"version": "2.0.3",
+	"version": "2.0.4",
 	"description": "A module to iterate between range.",
 	"keywords": [
 		"range",
@@ -36,6 +36,7 @@
 	"scripts": {
 		"build": "tsc"
 	},
+	"dependencies": { },
 	"devDependencies": {
 		"typescript": "^5.4.5"
 	},
