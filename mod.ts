@@ -9,11 +9,11 @@ export type RangeIteratorIndexType<T extends RangeIteratorAcceptType> = T extend
 /**
  * Resolve code point of the character.
  * @access private
- * @param {string} argumentName Argument name.
+ * @param {string} parameterName Name of the parameter.
  * @param {string} value Character.
  * @returns {number} Code point of the character.
  */
-function resolveCharacterCodePoint(argumentName: string, value: string): number {
+function resolveCharacterCodePoint(parameterName: string, value: string): number {
 	try {
 		const valueSplit: string[] = [...value];
 		if (valueSplit.length !== 1) {
@@ -25,7 +25,7 @@ function resolveCharacterCodePoint(argumentName: string, value: string): number 
 		}
 		return characterCodePoint;
 	} catch {
-		throw new RangeError(`\`${value}\` (argument \`${argumentName}\`) is not a character which is in code point range 0 ~ 1114111!`);
+		throw new RangeError(`\`${value}\` (parameter \`${parameterName}\`) is not a character which is in code point range 0 ~ 1114111!`);
 	}
 }
 interface RangeIteratorLooperParameters<T extends RangeIteratorAcceptType> {
@@ -174,7 +174,7 @@ export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: 
 	if (typeof start === "bigint" && typeof end === "bigint") {
 		if (typeof options.step !== "undefined") {
 			if (!(options.step > 0n)) {
-				throw new RangeError(`Argument \`options.step\` is not a bigint which is > 0!`);
+				throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a bigint which is > 0!`);
 			}
 		}
 		return rangeLooper<bigint>({
@@ -196,11 +196,11 @@ export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: 
 		startAsNumber = resolveCharacterCodePoint("start", start);
 		endAsNumber = resolveCharacterCodePoint("end", end);
 	} else {
-		throw new TypeError(`Arguments \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
+		throw new TypeError(`Parameters \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
 	}
 	if (typeof options.step !== "undefined") {
 		if (!(options.step > 0)) {
-			throw new RangeError(`Argument \`options.step\` is not a number which is > 0!`);
+			throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a number which is > 0!`);
 		}
 	}
 	return rangeLooper<number | string>({
