@@ -1,5 +1,9 @@
 import { invokeDenoNodeJSTransformer } from "DNT";
 await invokeDenoNodeJSTransformer({
+	assetsCopy: [
+		"LICENSE.md",
+		"README.md"
+	],
 	entrypoints: [{
 		name: ".",
 		path: "mod.ts"
