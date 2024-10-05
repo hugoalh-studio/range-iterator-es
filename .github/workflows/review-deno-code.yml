@@ -30,7 +30,7 @@ jobs:
       CDV_RUN_LITE: "${{matrix.runon != 'ubuntu-latest'}}"
     steps:
       - name: "Checkout Repository"
-        uses: "actions/checkout@v4.1.7"
+        uses: "actions/checkout@v4.2.0"
       - name: "Setup Deno"
         uses: "denoland/setup-deno@v1.5.1"
         with:
