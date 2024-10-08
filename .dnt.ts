@@ -1,13 +1,13 @@
-import { invokeDenoNodeJSTransformer } from "DNT";
+import {
+	getEntrypointsFromConfig,
+	invokeDenoNodeJSTransformer
+} from "DNT";
 await invokeDenoNodeJSTransformer({
 	assetsCopy: [
 		"LICENSE.md",
 		"README.md"
 	],
-	entrypoints: [{
-		name: ".",
-		path: "mod.ts"
-	}],
+	entrypoints: await getEntrypointsFromConfig("jsr.jsonc"),
 	generateDeclarationMap: true,
 	metadata: {
 		name: "@hugoalh/range-iterator",
