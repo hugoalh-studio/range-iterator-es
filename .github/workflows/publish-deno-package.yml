@@ -70,7 +70,7 @@ jobs:
       - name: "Save NPM Package Artifact"
         id: "npm-artifact"
         if: "${{!cancelled() && steps.metadata.outputs.npm-build == 'true' && steps.npm-build.outcome == 'success'}}"
-        uses: "actions/upload-artifact@v4.4.0"
+        uses: "actions/upload-artifact@v4.4.2"
         with:
           name: "npm-artifact"
           path: "${{steps.analyze.outputs.npm-root}}"
