@@ -48,7 +48,7 @@ jobs:
           Add-Content -LiteralPath $Env:GITHUB_OUTPUT -Value "jsr-publish=$(($Null -ine $Config.tasks.('jsr-publish')).ToString().ToLower())"
           Add-Content -LiteralPath $Env:GITHUB_OUTPUT -Value "jsr-publish-provenance=$(($Null -ine $Config.tasks.('jsr-publish-provenance')).ToString().ToLower())"
           Add-Content -LiteralPath $Env:GITHUB_OUTPUT -Value "npm-build=$(($Null -ine $Config.tasks.('npm-build')).ToString().ToLower())"
-          Add-Content -LiteralPath $Env:GITHUB_OUTPUT -Value "npm-root=$(Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath ($Config._behaviour.npm.root ?? './npm'))"
+          Add-Content -LiteralPath $Env:GITHUB_OUTPUT -Value "npm-root=$(Join-Path -Path $Env:GITHUB_WORKSPACE -ChildPath ($Config._behaviour.npm.root ?? 'npm'))"
       - name: "Build Repository"
         if: "${{steps.metadata.outputs.build == 'true'}}"
         run: |-
@@ -73,7 +73,7 @@ jobs:
         uses: "actions/upload-artifact@v4.4.3"
         with:
           name: "npm-artifact"
-          path: "${{steps.analyze.outputs.npm-root}}"
+          path: "${{steps.metadata.outputs.npm-root}}"
           if-no-files-found: "error"
           retention-days: "1"
           include-hidden-files: "true"
