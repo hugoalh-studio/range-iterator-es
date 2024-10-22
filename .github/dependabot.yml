@@ -13,16 +13,3 @@ updates:
     open-pull-requests-limit: 100
     pull-request-branch-name:
       separator: "/"
-  - package-ecosystem: "npm"
-    directory: "/npm"
-    schedule:
-      interval: "daily"
-      timezone: "Etc/UTC"
-    labels:
-      - "Platform/NodeJS"
-      - "Status/Pending 🔵"
-      - "Type/Dependency 📦"
-    open-pull-requests-limit: 100
-    pull-request-branch-name:
-      separator: "/"
-    versioning-strategy: "widen"
