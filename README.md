@@ -3,7 +3,7 @@
 [**⚖️** MIT](./LICENSE.md)
 
 [![Deno Land: range_iterator](https://img.shields.io/badge/dynamic/json?label=range_iterator&labelColor=000000&logo=deno&logoColor=ffffff&style=flat&url=https%3A%2F%2Fapiland.deno.dev%2Fv2%2Fmodules%2Frange_iterator&query=%24.latest_version "Deno Land: range_iterator")](https://deno.land/x/range_iterator)
-[![GitHub: hugoalh-studio/range-iterator-es](https://img.shields.io/github/v/release/hugoalh-studio/range-iterator-es?label=hugoalh-studio/range-iterator-es&labelColor=181717&logo=github&logoColor=ffffff&sort=semver&style=flat "GitHub: hugoalh-studio/range-iterator-es")](https://github.com/hugoalh-studio/range-iterator-es)
+[![GitHub: hugoalh/range-iterator-es](https://img.shields.io/github/v/release/hugoalh/range-iterator-es?label=hugoalh/range-iterator-es&labelColor=181717&logo=github&logoColor=ffffff&sort=semver&style=flat "GitHub: hugoalh/range-iterator-es")](https://github.com/hugoalh/range-iterator-es)
 [![JSR: @hugoalh/range-iterator](https://img.shields.io/jsr/v/@hugoalh/range-iterator?label=@hugoalh/range-iterator&labelColor=F7DF1E&logo=jsr&logoColor=000000&style=flat "JSR: @hugoalh/range-iterator")](https://jsr.io/@hugoalh/range-iterator)
 [![NPM: @hugoalh/range-iterator](https://img.shields.io/npm/v/@hugoalh/range-iterator?label=@hugoalh/range-iterator&labelColor=CB3837&logo=npm&logoColor=ffffff&style=flat "NPM: @hugoalh/range-iterator")](https://www.npmjs.com/package/@hugoalh/range-iterator)
 
@@ -31,7 +31,7 @@ An ES (JavaScript & TypeScript) module to iterate between range.
   ```
 - **Remote - GitHub Raw:**
   ```
-  https://raw.githubusercontent.com/hugoalh-studio/range-iterator-es/{Tag}/mod.ts
+  https://raw.githubusercontent.com/hugoalh/range-iterator-es/{Tag}/mod.ts
   ```
 - **JSR:**
   ```
@@ -57,7 +57,7 @@ An ES (JavaScript & TypeScript) module to iterate between range.
 
 *This module does not require any runtime permission.*
 
-## 🧩 APIs
+## 🧩 APIs (Excerpt)
 
 - ```ts
   function rangeIterator(start: bigint, end: bigint, options?: RangeIteratorOptions<bigint>): Generator<bigint>;
@@ -69,16 +69,7 @@ An ES (JavaScript & TypeScript) module to iterate between range.
   ```
 - ```ts
   interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
-    /**
-     * Whether to exclusive end.
-     * @default false
-     */
     endExclusive?: boolean;
-    /**
-     * Step of the decrement/increment of the iterate.
-     * @default 1n // Big integer.
-     * @default 1 // Number/String.
-     */
     step?: RangeIteratorIndexType<T>;
   }
   ```
@@ -90,7 +81,7 @@ An ES (JavaScript & TypeScript) module to iterate between range.
   ```
 
 > [!NOTE]
-> - For the prettier documentation, can visit via:
+> - For the full or prettier documentation, can visit via:
 >   - [Deno CLI `deno doc`](https://docs.deno.com/runtime/reference/cli/documentation_generator/)
 >   - [Deno Land](https://deno.land/x/range_iterator)
 >   - [JSR](https://jsr.io/@hugoalh/range-iterator)

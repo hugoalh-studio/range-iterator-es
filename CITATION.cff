@@ -4,8 +4,8 @@ title: "Range Iterator (ES)"
 message: "If you use this software, please cite it using the metadata from this file."
 type: "software"
 authors:
-  - name: "hugoalh Studio"
-repository-code: "https://github.com/hugoalh-studio/range-iterator-es"
+  - name: "hugoalh"
+repository-code: "https://github.com/hugoalh/range-iterator-es"
 keywords:
   - "es"
   - "iterate"
