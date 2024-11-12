@@ -1,3 +1,18 @@
+function resolveCharacterCodePoint(parameterName: string, item: string): number {
+	try {
+		const itemSplit: string[] = [...item];
+		if (itemSplit.length !== 1) {
+			throw undefined;
+		}
+		const result: number | undefined = item.codePointAt(0);
+		if (typeof result === "undefined") {
+			throw undefined;
+		}
+		return result;
+	} catch {
+		throw new RangeError(`\`${item}\` (parameter \`${parameterName}\`) is not a character which is in code point range 0 ~ 1114111!`);
+	}
+}
 /**
  * Accept type of the range iterator.
  */
@@ -7,41 +22,32 @@ export type RangeIteratorAcceptType = bigint | number | string;
  */
 export type RangeIteratorIndexType<T extends RangeIteratorAcceptType> = T extends bigint ? bigint : number;
 /**
- * Resolve code point of the character.
- * @access private
- * @param {string} parameterName Name of the parameter.
- * @param {string} value Character.
- * @returns {number} Code point of the character.
+ * Options of the range iterator.
  */
-function resolveCharacterCodePoint(parameterName: string, value: string): number {
-	try {
-		const valueSplit: string[] = [...value];
-		if (valueSplit.length !== 1) {
-			throw undefined;
-		}
-		const characterCodePoint: number | undefined = value.codePointAt(0);
-		if (typeof characterCodePoint === "undefined") {
-			throw undefined;
-		}
-		return characterCodePoint;
-	} catch {
-		throw new RangeError(`\`${value}\` (parameter \`${parameterName}\`) is not a character which is in code point range 0 ~ 1114111!`);
-	}
+export interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
+	/**
+	 * Whether the end of the range is exclusive.
+	 * @default {false}
+	 */
+	endExclusive?: boolean;
+	/**
+	 * Step of the decrement/increment of the iterate.
+	 * @default {1n} Big integer.
+	 * @default {1} Number/String.
+	 */
+	step?: RangeIteratorIndexType<T>;
+	/**
+	 * Whether the end of the range is exclusive. Alias of the property {@linkcode endExclusive}.
+	 * @default {false}
+	 * @deprecated Use property {@linkcode endExclusive} instead.
+	 */
+	exclusiveEnd?: boolean;
 }
-interface RangeIteratorLooperParameters<T extends RangeIteratorAcceptType> {
+interface RangeIteratorLooperParameters<T extends RangeIteratorAcceptType> extends Required<Omit<RangeIteratorOptions<T>, "exclusiveEnd">> {
 	end: RangeIteratorIndexType<T>;
-	endExclusive: boolean;
 	resultIsString: T extends string ? true : false;
 	start: RangeIteratorIndexType<T>;
-	step: RangeIteratorIndexType<T>;
 }
-/**
- * Looper of the range iterator.
- * @access private
- * @template {RangeIteratorAcceptType} T
- * @param {RangeIteratorLooperParameters<T>} param0 Parameters.
- * @returns {Generator<T>}
- */
 function* rangeLooper<T extends RangeIteratorAcceptType>({
 	end,
 	endExclusive,
@@ -56,27 +62,6 @@ function* rangeLooper<T extends RangeIteratorAcceptType>({
 			yield (resultIsString ? String.fromCodePoint(current as number) : current) as T;
 		}
 	}
-}
-/**
- * Options of the range iterator.
- */
-export interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
-	/**
-	 * Whether to exclusive end.
-	 * @default {false}
-	 */
-	endExclusive?: boolean;
-	/**
-	 * Step of the decrement/increment of the iterate.
-	 * @default {1n} Big integer.
-	 * @default {1} Number/String.
-	 */
-	step?: RangeIteratorIndexType<T>;
-	/**
-	 * Whether to exclusive end.
-	 * @default {false}
-	 */
-	exclusiveEnd?: boolean;
 }
 /**
  * Range iterator with big integers.
@@ -102,6 +87,24 @@ export interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
  */
 export function rangeIterator(start: bigint, end: bigint, options?: RangeIteratorOptions<bigint>): Generator<bigint>;
 /**
+ * Range iterator with big integers.
+ * @param {bigint} start A big integer to start the iterate.
+ * @param {bigint} end A big integer to end the iterate.
+ * @param {RangeIteratorIndexType<bigint>} step Step of the decrement/increment of the iterate.
+ * @returns {Generator<bigint>}
+ * @example Iterate big integers from 1 to 9 with increment by 2 steps
+* ```ts
+* Array.from(rangeIterator(1n, 9n, 2n));
+* //=> [1n, 3n, 5n, 7n, 9n]
+* ```
+* @example Iterate big integers from 9 to 1 with decrement by 2 steps
+* ```ts
+* Array.from(rangeIterator(9n, 1n, 2n));
+* //=> [9n, 7n, 5n, 3n, 1n]
+* ```
+*/
+export function rangeIterator(start: bigint, end: bigint, step: RangeIteratorIndexType<bigint>): Generator<bigint>;
+/**
  * Range iterator with numbers.
  * @param {number} start A number to start the iterate.
  * @param {number} end A number to end the iterate.
@@ -125,47 +128,6 @@ export function rangeIterator(start: bigint, end: bigint, options?: RangeIterato
  */
 export function rangeIterator(start: number, end: number, options?: RangeIteratorOptions<number>): Generator<number>;
 /**
- * Range iterator with characters.
- * @param {string} start A character to start the iterate.
- * @param {string} end A character to end the iterate.
- * @param {RangeIteratorOptions<number>} [options] Options.
- * @returns {Generator<string>}
- * @example Iterate characters from "a" to "g"
- * ```ts
- * Array.from(rangeIterator("a", "g"));
- * //=> ["a", "b", "c", "d", "e", "f", "g"]
- * ```
- * @example Iterate characters from "a" to "g" with exclusive end
- * ```ts
- * Array.from(rangeIterator("a", "g", { endExclusive: true }));
- * //=> ["a", "b", "c", "d", "e", "f"]
- * ```
- * @example Iterate characters from "g" to "a"
- * ```ts
- * Array.from(rangeIterator("g", "a"));
- * //=> ["g", "f", "e", "d", "c", "b", "a"]
- * ```
- */
-export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string>;
-/**
- * Range iterator with big integers.
- * @param {bigint} start A big integer to start the iterate.
- * @param {bigint} end A big integer to end the iterate.
- * @param {RangeIteratorIndexType<bigint>} step Step of the decrement/increment of the iterate.
- * @returns {Generator<bigint>}
- * @example Iterate big integers from 1 to 9 with increment by 2 steps
- * ```ts
- * Array.from(rangeIterator(1n, 9n, 2n));
- * //=> [1n, 3n, 5n, 7n, 9n]
- * ```
- * @example Iterate big integers from 9 to 1 with decrement by 2 steps
- * ```ts
- * Array.from(rangeIterator(9n, 1n, 2n));
- * //=> [9n, 7n, 5n, 3n, 1n]
- * ```
- */
-export function rangeIterator(start: bigint, end: bigint, step: RangeIteratorIndexType<bigint>): Generator<bigint>;
-/**
  * Range iterator with numbers.
  * @param {number} start A number to start the iterate.
  * @param {number} end A number to end the iterate.
@@ -187,19 +149,42 @@ export function rangeIterator(start: number, end: number, step: RangeIteratorInd
  * Range iterator with characters.
  * @param {string} start A character to start the iterate.
  * @param {string} end A character to end the iterate.
+ * @param {RangeIteratorOptions<number>} [options] Options.
+ * @returns {Generator<string>}
+ * @example Iterate characters from "a" to "g"
+* ```ts
+* Array.from(rangeIterator("a", "g"));
+* //=> ["a", "b", "c", "d", "e", "f", "g"]
+* ```
+* @example Iterate characters from "a" to "g" with exclusive end
+* ```ts
+* Array.from(rangeIterator("a", "g", { endExclusive: true }));
+* //=> ["a", "b", "c", "d", "e", "f"]
+* ```
+* @example Iterate characters from "g" to "a"
+* ```ts
+* Array.from(rangeIterator("g", "a"));
+* //=> ["g", "f", "e", "d", "c", "b", "a"]
+* ```
+*/
+export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string>;
+/**
+ * Range iterator with characters.
+ * @param {string} start A character to start the iterate.
+ * @param {string} end A character to end the iterate.
  * @param {RangeIteratorIndexType<string>} step Step of the decrement/increment of the iterate.
  * @returns {Generator<string>}
  * @example Iterate characters from "a" to "g" with increment by 2 steps
- * ```ts
- * Array.from(rangeIterator("a", "g", 2));
- * //=> ["a", "c", "e", "g"]
- * ```
- * @example Iterate characters from "g" to "a" with decrement by 2 steps
- * ```ts
- * Array.from(rangeIterator("g", "a", 2));
- * //=> ["g", "e", "c", "a"]
- * ```
- */
+* ```ts
+* Array.from(rangeIterator("a", "g", 2));
+* //=> ["a", "c", "e", "g"]
+* ```
+* @example Iterate characters from "g" to "a" with decrement by 2 steps
+* ```ts
+* Array.from(rangeIterator("g", "a", 2));
+* //=> ["g", "e", "c", "a"]
+* ```
+*/
 export function rangeIterator(start: string, end: string, step?: RangeIteratorIndexType<string>): Generator<string>;
 export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: T, param2?: RangeIteratorOptions<T> | RangeIteratorIndexType<T>): Generator<T> {
 	const options: RangeIteratorOptions<T> = (
@@ -209,7 +194,7 @@ export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: 
 	const optionsEndExclusive: boolean = options.endExclusive ?? options.exclusiveEnd ?? false;
 	if (typeof start === "bigint" && typeof end === "bigint") {
 		if (typeof options.step !== "undefined") {
-			if (!(options.step > 0n)) {
+			if (!(typeof options.step === "bigint" && options.step > 0n)) {
 				throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a bigint which is > 0!`);
 			}
 		}
@@ -218,13 +203,14 @@ export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: 
 			endExclusive: optionsEndExclusive,
 			resultIsString: false,
 			start,
-			step: (options.step as bigint) ?? 1n
+			step: options.step ?? 1n
 		}) as Generator<T>;
 	}
-	let resultIsString = false;
+	let resultIsString: boolean;
 	let startAsNumber: number;
 	let endAsNumber: number;
 	if (typeof start === "number" && typeof end === "number") {
+		resultIsString = false;
 		startAsNumber = start;
 		endAsNumber = end;
 	} else if (typeof start === "string" && typeof end === "string") {
@@ -235,7 +221,7 @@ export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: 
 		throw new TypeError(`Parameters \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
 	}
 	if (typeof options.step !== "undefined") {
-		if (!(options.step > 0)) {
+		if (!(typeof options.step === "number" && options.step > 0)) {
 			throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a number which is > 0!`);
 		}
 	}
@@ -244,7 +230,7 @@ export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: 
 		endExclusive: optionsEndExclusive,
 		resultIsString,
 		start: startAsNumber,
-		step: (options.step as number) ?? 1
+		step: options.step ?? 1
 	}) as Generator<T>;
 }
 export default rangeIterator;
