@@ -93,16 +93,16 @@ export function rangeIterator(start: bigint, end: bigint, options?: RangeIterato
  * @param {RangeIteratorIndexType<bigint>} step Step of the decrement/increment of the iterate.
  * @returns {Generator<bigint>}
  * @example Iterate big integers from 1 to 9 with increment by 2 steps
-* ```ts
-* Array.from(rangeIterator(1n, 9n, 2n));
-* //=> [1n, 3n, 5n, 7n, 9n]
-* ```
-* @example Iterate big integers from 9 to 1 with decrement by 2 steps
-* ```ts
-* Array.from(rangeIterator(9n, 1n, 2n));
-* //=> [9n, 7n, 5n, 3n, 1n]
-* ```
-*/
+ * ```ts
+ * Array.from(rangeIterator(1n, 9n, 2n));
+ * //=> [1n, 3n, 5n, 7n, 9n]
+ * ```
+ * @example Iterate big integers from 9 to 1 with decrement by 2 steps
+ * ```ts
+ * Array.from(rangeIterator(9n, 1n, 2n));
+ * //=> [9n, 7n, 5n, 3n, 1n]
+ * ```
+ */
 export function rangeIterator(start: bigint, end: bigint, step: RangeIteratorIndexType<bigint>): Generator<bigint>;
 /**
  * Range iterator with numbers.
@@ -152,21 +152,21 @@ export function rangeIterator(start: number, end: number, step: RangeIteratorInd
  * @param {RangeIteratorOptions<number>} [options] Options.
  * @returns {Generator<string>}
  * @example Iterate characters from "a" to "g"
-* ```ts
-* Array.from(rangeIterator("a", "g"));
-* //=> ["a", "b", "c", "d", "e", "f", "g"]
-* ```
-* @example Iterate characters from "a" to "g" with exclusive end
-* ```ts
-* Array.from(rangeIterator("a", "g", { endExclusive: true }));
-* //=> ["a", "b", "c", "d", "e", "f"]
-* ```
-* @example Iterate characters from "g" to "a"
-* ```ts
-* Array.from(rangeIterator("g", "a"));
-* //=> ["g", "f", "e", "d", "c", "b", "a"]
-* ```
-*/
+ * ```ts
+ * Array.from(rangeIterator("a", "g"));
+ * //=> ["a", "b", "c", "d", "e", "f", "g"]
+ * ```
+ * @example Iterate characters from "a" to "g" with exclusive end
+ * ```ts
+ * Array.from(rangeIterator("a", "g", { endExclusive: true }));
+ * //=> ["a", "b", "c", "d", "e", "f"]
+ * ```
+ * @example Iterate characters from "g" to "a"
+ * ```ts
+ * Array.from(rangeIterator("g", "a"));
+ * //=> ["g", "f", "e", "d", "c", "b", "a"]
+ * ```
+ */
 export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string>;
 /**
  * Range iterator with characters.
@@ -175,16 +175,16 @@ export function rangeIterator(start: string, end: string, options?: RangeIterato
  * @param {RangeIteratorIndexType<string>} step Step of the decrement/increment of the iterate.
  * @returns {Generator<string>}
  * @example Iterate characters from "a" to "g" with increment by 2 steps
-* ```ts
-* Array.from(rangeIterator("a", "g", 2));
-* //=> ["a", "c", "e", "g"]
-* ```
-* @example Iterate characters from "g" to "a" with decrement by 2 steps
-* ```ts
-* Array.from(rangeIterator("g", "a", 2));
-* //=> ["g", "e", "c", "a"]
-* ```
-*/
+ * ```ts
+ * Array.from(rangeIterator("a", "g", 2));
+ * //=> ["a", "c", "e", "g"]
+ * ```
+ * @example Iterate characters from "g" to "a" with decrement by 2 steps
+ * ```ts
+ * Array.from(rangeIterator("g", "a", 2));
+ * //=> ["g", "e", "c", "a"]
+ * ```
+ */
 export function rangeIterator(start: string, end: string, step?: RangeIteratorIndexType<string>): Generator<string>;
 export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: T, param2?: RangeIteratorOptions<T> | RangeIteratorIndexType<T>): Generator<T> {
 	const options: RangeIteratorOptions<T> = (
