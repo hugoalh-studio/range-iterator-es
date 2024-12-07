@@ -61,23 +61,18 @@ An ES (JavaScript & TypeScript) module to iterate between range.
 
 - ```ts
   function rangeIterator(start: bigint, end: bigint, options?: RangeIteratorOptions<bigint>): Generator<bigint>;
-  function rangeIterator(start: bigint, end: bigint, step: RangeIteratorIndexType<bigint>): Generator<bigint>;
+  function rangeIterator(start: bigint, end: bigint, step: bigint): Generator<bigint>;
   function rangeIterator(start: number, end: number, options?: RangeIteratorOptions<number>): Generator<number>;
-  function rangeIterator(start: number, end: number, step: RangeIteratorIndexType<number>): Generator<number>;
-  function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string>;
-  function rangeIterator(start: string, end: string, step: RangeIteratorIndexType<string>): Generator<string>;
+  function rangeIterator(start: number, end: number, step: number): Generator<number>;
+  function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<number>): Generator<string>;
+  function rangeIterator(start: string, end: string, step: number): Generator<string>;
   ```
 - ```ts
-  interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
+  interface RangeIteratorOptions<T extends bigint | number> {
     endExclusive?: boolean;
-    step?: RangeIteratorIndexType<T>;
+    startExclusive?: boolean;
+    step?: T;
   }
-  ```
-- ```ts
-  type RangeIteratorAcceptType = bigint | number | string;
-  ```
-- ```ts
-  type RangeIteratorIndexType<T extends RangeIteratorAcceptType> = T extends bigint ? bigint : number;
   ```
 
 > [!NOTE]

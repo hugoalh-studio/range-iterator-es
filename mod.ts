@@ -1,7 +1,6 @@
 function resolveCharacterCodePoint(parameterName: string, item: string): number {
 	try {
-		const itemSplit: string[] = [...item];
-		if (itemSplit.length !== 1) {
+		if ([...item].length !== 1) {
 			throw undefined;
 		}
 		const result: number | undefined = item.codePointAt(0);
@@ -15,27 +14,34 @@ function resolveCharacterCodePoint(parameterName: string, item: string): number 
 }
 /**
  * Accept type of the range iterator.
+ * @deprecated
  */
 export type RangeIteratorAcceptType = bigint | number | string;
 /**
  * Index type of the range iterator.
+ * @deprecated
  */
 export type RangeIteratorIndexType<T extends RangeIteratorAcceptType> = T extends bigint ? bigint : number;
 /**
  * Options of the range iterator.
  */
-export interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
+export interface RangeIteratorOptions<T extends bigint | number> {
 	/**
 	 * Whether the end of the range is exclusive.
 	 * @default {false}
 	 */
 	endExclusive?: boolean;
 	/**
-	 * Step of the decrement/increment of the iterate.
-	 * @default {1n} Big integer.
-	 * @default {1} Number/String.
+	 * Whether the start of the range is exclusive.
+	 * @default {false}
 	 */
-	step?: RangeIteratorIndexType<T>;
+	startExclusive?: boolean;
+	/**
+	 * Step of the decrement (`start` is smaller than `end`) or increment (`start` is bigger than `end`) of the iterate. By default, it is 1 step.
+	 * 
+	 * For iterate numbers, this property also accept float number.
+	 */
+	step?: T;
 	/**
 	 * Whether the end of the range is exclusive. Alias of the property {@linkcode endExclusive}.
 	 * @default {false}
@@ -43,24 +49,23 @@ export interface RangeIteratorOptions<T extends RangeIteratorAcceptType> {
 	 */
 	exclusiveEnd?: boolean;
 }
-interface RangeIteratorLooperParameters<T extends RangeIteratorAcceptType> extends Required<Omit<RangeIteratorOptions<T>, "exclusiveEnd">> {
-	end: RangeIteratorIndexType<T>;
-	resultIsString: T extends string ? true : false;
-	start: RangeIteratorIndexType<T>;
-}
-function* rangeLooper<T extends RangeIteratorAcceptType>({
-	end,
-	endExclusive,
-	resultIsString,
-	start,
-	step
-}: RangeIteratorLooperParameters<T>): Generator<T> {
+function rangeLooperNumerics(start: bigint, end: bigint, step: bigint, startExclusive: boolean, endExclusive: boolean): Generator<bigint>;
+function rangeLooperNumerics(start: number, end: number, step: number, startExclusive: boolean, endExclusive: boolean): Generator<number>;
+function* rangeLooperNumerics(start: bigint | number, end: bigint | number, step: bigint | number, startExclusive: boolean, endExclusive: boolean): Generator<bigint | number> {
 	const isReverse: boolean = start > end;
-	//@ts-ignore All of the types are compatible.
-	for (let current: RangeIteratorLooperParameters<T>["start"] = start; isReverse ? (current >= end) : (current <= end); current += isReverse ? -step : step) {
-		if (!(endExclusive && current === end)) {
-			yield (resultIsString ? String.fromCodePoint(current as number) : current) as T;
+	//@ts-ignore Overloads.
+	for (let current: bigint | number = start; isReverse ? (current >= end) : (current <= end); current += isReverse ? -step : step) {
+		if (!(
+			(startExclusive && current === start) ||
+			(endExclusive && current === end)
+		)) {
+			yield current;
 		}
+	}
+}
+function* rangeLooperCharacters(start: number, end: number, step: number, startExclusive: boolean, endExclusive: boolean): Generator<string> {
+	for (const element of rangeLooperNumerics(start, end, step, startExclusive, endExclusive)) {
+		yield String.fromCodePoint(element);
 	}
 }
 /**
@@ -90,7 +95,7 @@ export function rangeIterator(start: bigint, end: bigint, options?: RangeIterato
  * Range iterator with big integers.
  * @param {bigint} start A big integer to start the iterate.
  * @param {bigint} end A big integer to end the iterate.
- * @param {RangeIteratorIndexType<bigint>} step Step of the decrement/increment of the iterate.
+ * @param {bigint} step Step of the decrement/increment of the iterate.
  * @returns {Generator<bigint>}
  * @example Iterate big integers from 1 to 9 with increment by 2 steps
  * ```ts
@@ -103,7 +108,7 @@ export function rangeIterator(start: bigint, end: bigint, options?: RangeIterato
  * //=> [9n, 7n, 5n, 3n, 1n]
  * ```
  */
-export function rangeIterator(start: bigint, end: bigint, step: RangeIteratorIndexType<bigint>): Generator<bigint>;
+export function rangeIterator(start: bigint, end: bigint, step: bigint): Generator<bigint>;
 /**
  * Range iterator with numbers.
  * @param {number} start A number to start the iterate.
@@ -131,7 +136,7 @@ export function rangeIterator(start: number, end: number, options?: RangeIterato
  * Range iterator with numbers.
  * @param {number} start A number to start the iterate.
  * @param {number} end A number to end the iterate.
- * @param {RangeIteratorIndexType<number>} step Step of the decrement/increment of the iterate.
+ * @param {number} step Step of the decrement/increment of the iterate.
  * @returns {Generator<number>}
  * @example Iterate numbers from 1 to 9 with increment by 2 steps
  * ```ts
@@ -144,7 +149,7 @@ export function rangeIterator(start: number, end: number, options?: RangeIterato
  * //=> [9, 7, 5, 3, 1]
  * ```
  */
-export function rangeIterator(start: number, end: number, step: RangeIteratorIndexType<number>): Generator<number>;
+export function rangeIterator(start: number, end: number, step: number): Generator<number>;
 /**
  * Range iterator with characters.
  * @param {string} start A character to start the iterate.
@@ -167,12 +172,12 @@ export function rangeIterator(start: number, end: number, step: RangeIteratorInd
  * //=> ["g", "f", "e", "d", "c", "b", "a"]
  * ```
  */
-export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<string>): Generator<string>;
+export function rangeIterator(start: string, end: string, options?: RangeIteratorOptions<number>): Generator<string>;
 /**
  * Range iterator with characters.
  * @param {string} start A character to start the iterate.
  * @param {string} end A character to end the iterate.
- * @param {RangeIteratorIndexType<string>} step Step of the decrement/increment of the iterate.
+ * @param {number} step Step of the decrement/increment of the iterate.
  * @returns {Generator<string>}
  * @example Iterate characters from "a" to "g" with increment by 2 steps
  * ```ts
@@ -185,52 +190,40 @@ export function rangeIterator(start: string, end: string, options?: RangeIterato
  * //=> ["g", "e", "c", "a"]
  * ```
  */
-export function rangeIterator(start: string, end: string, step?: RangeIteratorIndexType<string>): Generator<string>;
-export function rangeIterator<T extends RangeIteratorAcceptType>(start: T, end: T, param2?: RangeIteratorOptions<T> | RangeIteratorIndexType<T>): Generator<T> {
-	const options: RangeIteratorOptions<T> = (
+export function rangeIterator(start: string, end: string, step: number): Generator<string>;
+export function rangeIterator(start: bigint | number | string, end: bigint | number | string, param2?: bigint | number | RangeIteratorOptions<bigint | number>): Generator<bigint | number | string> {
+	const options: RangeIteratorOptions<bigint | number> = (
 		typeof param2 === "bigint" ||
 		typeof param2 === "number"
 	) ? { step: param2 } : (param2 ?? {});
-	const optionsEndExclusive: boolean = options.endExclusive ?? options.exclusiveEnd ?? false;
+	const { startExclusive = false }: RangeIteratorOptions<bigint | number> = options;
+	const endExclusive: boolean = options.endExclusive ?? options.exclusiveEnd ?? false;
 	if (typeof start === "bigint" && typeof end === "bigint") {
 		if (typeof options.step !== "undefined") {
 			if (!(typeof options.step === "bigint" && options.step > 0n)) {
 				throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a bigint which is > 0!`);
 			}
 		}
-		return rangeLooper<bigint>({
-			end,
-			endExclusive: optionsEndExclusive,
-			resultIsString: false,
-			start,
-			step: options.step ?? 1n
-		}) as Generator<T>;
+		return rangeLooperNumerics(start, end, options.step ?? 1n, startExclusive, endExclusive);
 	}
-	let resultIsString: boolean;
-	let startAsNumber: number;
-	let endAsNumber: number;
 	if (typeof start === "number" && typeof end === "number") {
-		resultIsString = false;
-		startAsNumber = start;
-		endAsNumber = end;
-	} else if (typeof start === "string" && typeof end === "string") {
-		resultIsString = true;
-		startAsNumber = resolveCharacterCodePoint("start", start);
-		endAsNumber = resolveCharacterCodePoint("end", end);
-	} else {
-		throw new TypeError(`Parameters \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
-	}
-	if (typeof options.step !== "undefined") {
-		if (!(typeof options.step === "number" && options.step > 0)) {
-			throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a number which is > 0!`);
+		if (typeof options.step !== "undefined") {
+			if (!(typeof options.step === "number" && options.step > 0)) {
+				throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a number which is > 0!`);
+			}
 		}
+		return rangeLooperNumerics(start, end, options.step ?? 1, startExclusive, endExclusive);
 	}
-	return rangeLooper<number | string>({
-		end: endAsNumber,
-		endExclusive: optionsEndExclusive,
-		resultIsString,
-		start: startAsNumber,
-		step: options.step ?? 1
-	}) as Generator<T>;
+	if (typeof start === "string" && typeof end === "string") {
+		const startCodePoint: number = resolveCharacterCodePoint("start", start);
+		const endCodePoint: number = resolveCharacterCodePoint("end", end);
+		if (typeof options.step !== "undefined") {
+			if (!(typeof options.step === "number" && Number.isSafeInteger(options.step) && options.step > 0)) {
+				throw new RangeError(`\`${options.step}\` (parameter \`options.step\`) is not a number which is integer, safe, and > 0!`);
+			}
+		}
+		return rangeLooperCharacters(startCodePoint, endCodePoint, options.step ?? 1, startExclusive, endExclusive);
+	}
+	throw new TypeError(`Parameters \`start\` and \`end\` are not bigints, numbers, or strings (character)!`);
 }
 export default rangeIterator;
